@@ -1,34 +1,60 @@
-#' Make the car_mlogit estimation data
+#' Read and clean the CSV data
 #' 
-make_data <- function(){
-  # load the car data from the mlogit package
-  data("Car", package = "mlogit")
-  
-  # transform the data into an mlogit dataframe 
-  car_mlogit <- Car |>
-    mutate(choice = gsub("choice", "", choice)) |>
-    dfidx( varying = 5:70, shape = "wide", choice = "choice", sep = "")
-  
-  # return data from function
-  car_mlogit
+read_ett <- function(ett_data_file){
+  read_csv(ett_data_file, 
+           col_types = cols(.default = "d", 
+                            year = "c",
+                            date = "c", location = "c", type = "c", period = "c",
+                            time = "t", t7t5 = "t", t7t0 = "t", t5t0 = "t")) |> 
+    mutate(
+      type = case_when(
+        grepl("PI", type) ~ "Personal Injury",
+        grepl("PD", type) ~ "Property Damage",
+        grepl("Fatal", type) ~ "Fatal"
+      ),
+      type = as_factor(type),
+      type = fct_relevel(type, levels = c("Property Damage", "Personal Injury", "Fatal")),
+      date = as_date(date, format = "%m/%d/%y")
+    )
 }
 
 
 #' Estimate models
 #' 
-#' @param car_mlogit The mlogit data frame returned by make_data
+#' @param ett_data The data frame returned from read_ett 
 #' 
-estimate_models <- function(car_mlogit){
+estimate_rt_models <- function(ett_data){
   
-  # first model: type and price
-  model1 <- mlogit(choice ~ type + price | -1, data = car_mlogit)
+  models <- list()
   
-  # second model: add range of vehicle
-  model2 <- update(model1, .~. + range)
+  # relationship between rt and number of imts
+  models[["Base"]]  <- lm(log(rt_imt) ~ n_imt + n_uhp + lanes_bottle + type,
+                          data = ett_data)
+  # add year
+  models[["Year"]]  <- update(models[["Base"]], formula. = .~. + year)
   
-  # put models in a list and return
-  models <- list("Model 1" = model1, "Model 2" = model2)
+  
   models
+  
+  
+}
+
+#' Estimate models
+#' 
+#' @param ett_data The data frame returned from read_ett()
+#' 
+estimate_ett_models <- function(ett_data){
+  
+  models <- list()
+  
+  # relationship between ett and number of imts
+  models[["Base"]]  <- lm(log(ett) ~ n_imt + n_uhp + lanes_bottle + type, data = ett_data)
+  models[["Year"]]  <- update(models[["Base"]], formula. = .~. + year)
+  models[["Year and RT"]]  <- update(models[["Base"]], formula. = .~. + year*log(rt_imt))
+  
+  
+  models
+  
   
 }
 

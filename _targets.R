@@ -9,7 +9,8 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tidyverse", "mlogit", "modelsummary"), # packages that your targets need to run
+  packages = c("tidyverse", "mlogit", "modelsummary", 
+               "lubridate"), # packages that your targets need to run
   format = "rds" # default storage format
   # Set other options as needed.
 )
@@ -21,17 +22,17 @@ tar_option_set(
 # Install packages {{future}}, {{future.callr}}, and {{future.batchtools}} to allow use_targets() to configure tar_make_future() options.
 
 # Load the R scripts stored in R/ with your custom functions:
-for (file in list.files("R", full.names = TRUE)) source(file)
+for (file in list.files("R", full.names = TRUE)){
+  if (file != "R/chapter_start.R")  source(file)
+} 
 # source("other_functions.R") # Source other scripts as needed. # nolint
 
 # Replace the target list below with your own:
 list(
-  tar_target(
-    name = car_mlogit,
-    command = make_data()
-  ),
-  tar_target(
-    name = models,
-    command = estimate_models(car_mlogit)
-  )
+  tar_target(ett_data_file, "data/TIM Phase III Data for ETT analysis.csv",
+             format = "file"),
+  tar_target(ett_data, read_ett(ett_data_file)),
+  tar_target(ett_models, estimate_ett_models(ett_data)),
+  tar_target(rt_models, estimate_rt_models(ett_data))
+  
 )
