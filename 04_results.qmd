@@ -1,4 +1,4 @@
-## Applications
+## Results
 
 ```{r setup, file = "R/chapter_start.R", include = FALSE}
 # a number of commands need to run at the beginning of each chapter. This
@@ -9,43 +9,70 @@
 ```{r setup2, include = FALSE}
 # Other packages ------
 # These are packages that get used in this chapter but aren't part of the default set.
-library(mlogit)
-```
-
-This section might be called "Results" instead of "Applications," depending on what it is that you are working on. But you'll probably say something like "The initial model estimation results are given in @tbl-estimationresults" That table is created with the `modelsummary()` package and function.
-
-```{r estimation}
-tar_load(models)
-```
-
-```{r estimation-results}
-#| label: tbl-estimationresults
-#| tbl-cap: Model Summary Results
-modelsummary(models, estimate = "{estimate} ({statistic})")
-```
-
-Sometimes, it is nice to put the models or your other results into a figure instead
-of a table. Have a look at @fig-modelplot. Note that your figures might look better
-in pdf if you use the `tikz` rendering device.
-
-```{r modelplot}
-#| label: fig-modelplot
-#| fig-cap: Estimated model coefficients and confidence intervals.
-#| 
-modelplot(models) +
-  xlab("Coefficient estimates")
 ```
 
 
-With those results presented, you can go into a discussion of what they mean. first, discuss the actual results that are shown in the table, and then any interesting or unintuitive observations.
 
 
-## Additional Analysis
+```{r loadmodels}
+tar_load(rt_models)
+tar_load(ett_models)
+```
 
-Usually, it is good to use your model for something.
 
--   Hypothetical policy analysis
--   Statistical validation effort
--   Equity or impact analysis
 
-If the analysis is substantial, it might become its own top-level section.
+```{r tbl-rtmodels}
+#| label: tbl-rtmodels
+#| tbl-cap: Estimated Models of IMT Response Time
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "typePersonal Injury" = "Personal injury crash (ref. property damage)",
+  "typeFatal"    = "Fatal crash (ref. property damage)",
+  "lanes_bottle" = "Total lanes on roadway",
+  "n_imt"        = "N. IMT units",
+  "n_uhp"        = "N. UHP units",
+  "year2022"     = "2022 dummy (ref. 2018)"
+  )
+
+modelsummary(
+  rt_models, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: $\\log$(Response time).', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+@tbl-rtmodels shows regression estimates of models predicting the natural log of
+the IMT response time. A Base model
+
+
+```{r tbl-ettmodels}
+#| label: tbl-ettmodels
+#| tbl-cap: Estimated Models of Excess Travel Time
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "typePersonal Injury" = "Personal injury crash (ref. property damage)",
+  "typeFatal"    = "Fatal crash (ref. property damage)",
+  "lanes_bottle" = "Total lanes on roadway",
+  "n_imt"        = "N. IMT units",
+  "n_uhp"        = "N. UHP units",
+  "year2022"     = "2022 dummy (ref. 2018)",
+  "log(rt_imt)"       = "IMT response time",
+  "year2022:log(rt_imt)" = "2022 $\\times$ IMT Response time"
+  )
+
+modelsummary(
+  ett_models, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: $\\log$(Excess  travel time).', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+@tbl-ettmodels shows estimates of regression models predicting the excess travel time.
+
+
+### Predictions
+

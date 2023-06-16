@@ -9,43 +9,79 @@
 ```{r setup2, include = FALSE}
 # Other packages ------
 # These are packages that get used in this chapter but aren't part of the default set.
-library(mlogit)
+library(kableExtra)
 ```
 
-In this chapter, you describe the approach you have taken on the problem. This usually involves a discussion about both the data you used and the models you applied.
+To estimate the impact of Utah's IMT program expansion, we collect data from UDOT and UHP and model the impacts with a linear regression analysis.
 
 ## Data
 
-Discuss where you got your data, how you cleaned it, and any assumptions you made. In this example, we get the `Car` dataset from the `mlogit` [@mlogit] package[^03_methods-1] and massage it to be in the format needed for `mlogit`.
+Describe the UHP incident database.
 
-[^03_methods-1]: You can often get a well-formatted citation for an R package by typing `citation(package = "packagename")` in the console.
+Describe the UDOT incident database.
 
-```{r load_data}
-tar_load(car_mlogit)
+Describe efforts to clean and filter the data for usable records.
+
+```{r data}
+tar_load(ett_data)
 ```
 
-Often there will be a table describing summary statistics of your dataset. @tbl-summary shows a nice table using the [`datasummary`](https://vincentarelbundock.github.io/modelsummary/articles/datasummary.html) functions in the `modelsummary` package [@modelsummary].
 
-```{r datasummary}
-#| label: tbl-summary
-#| tbl-cap: Descriptive Statistics of Dataset
-datasummary_balance(
-  ~type, 
-  data = car_mlogit %>% 
-    select(type, fuel, price, range, size), 
-  dinm = FALSE
-) %>%
-  kableExtra::kable_styling(latex_options="scale_down")
+```{r tab-severity}
+#| label: tbl-severity
+#| tbl-cap: Descriptive Statistics of Data by Crash Severity
+ds_tab <- datasummary_balance(~ type,
+                    data = ett_data |> 
+                      transmute(
+                        type, `IMT responding` = n_imt, `UHP responding` = n_uhp, 
+                        `Response time` = rt_imt, `Roadway clearance time` = rct_imt,
+                        `Incident clearance time` = ict_imt,
+                        `Total lanes on roadway` = lanes_bottle,
+                        `Lanes closed for incident` = lanes_closed,
+                        `Affected volume` = vol_affect,
+                        `Excess travel time` = ett,
+                        Year = year,
+                        Period = period),
+                    output = 'kableExtra'
+                    ) 
+ds_tab |> 
+  kable_styling(position = "center") |> 
+  landscape()
 ```
+
+@tbl-severity presents descriptive statistics of the cleaned incident data by
+crash severity. Virtually all of the records are either property damage or
+personal injury crashes (approximately half each), with a handful of fatal
+crashes. The mean excess travel time for these fatal crashes is approximately
+three times higher than for the other more common crash types, though the wide
+standard errors and the high degree of skewness make conclusive statements
+about this question somewhat difficult.
+
+```{r fig-frequency}
+#| label: fig-frequency
+#| fig-cap: IMT-responding incidents per day by crash severity.
+ett_data |> 
+  group_by(date, type) |> 
+  summarise(n = n()) |> 
+  ggplot(aes(x = n, fill = type)) + 
+  geom_bar() + 
+  xlab("Incidents per Day") + 
+  ylab("Count") +
+  theme_bw()
+```
+
+@fig-frequency shows a distribution of incidents by day. This might not be the
+most relevant plot, but it's the one that I put together.
 
 ## Models
 
-If your work is mostly a new model, you probably will have introduced some details in the literature review. But this is where you describe the mathematical construction of your model, the variables it uses, and other things. Some methods are so common (linear regression) that it is unnecessary to explore them in detail. But others will need to be described, often with mathematics. For example, the probability of an alternative $i$ in the a multinomial logit model is
-
+We hypothesize that the increase in IMT units decreased response time
+as well as decreased excess travel time.  This suggests two models,
+$$ 
+\log(\mathrm{IMT\ Response\ Time}_i) = X_i\beta
 $$
-P_i(X_{in}) = \frac{e^{X_{in}\beta_i}}{\sum_{j \in J}e^{X_{jn}\beta_j}}
-$$ {#eq-mnl}
-
-Use [LaTeX mathematics](https://www.overleaf.com/learn/latex/mathematical_expressions). You'll want to number display equations so that you can refer to them later in the manuscript. Other simpler math can be described inline, like saying that $i, j \in J$. Details on using equations in Quarto are available [here](https://quarto.org/docs/visual-editor/technical.html#equations).
-
-You can also refer back to numbered equations, like the probability of an MNL presented in @eq-mnl.
+and 
+$$ 
+\log(\mathrm{Excess\ Travel\ Time}_i) = X_i\beta + \delta\log(\mathrm{IMT\ Response\ Time}_i)
+$$
+where the index $i$ denotes a single incident, $X$ is a vector of controlling variables --- the number of responding units, the size of the roadways, etc. --- and $\beta$ are estimated coefficients.
