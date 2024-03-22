@@ -67,7 +67,7 @@ book:
     the key aspects of their research and attracts the attention of potential 
     readers. - Written by ChatGPT
 
-bibliography: references.bib
+bibliography: [references.bib, IMTRegression.bib]
 
 format:
   html:
