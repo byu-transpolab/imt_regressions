@@ -13,7 +13,7 @@ read_ett <- function(ett_data_file){
         grepl("Fatal", type) ~ "Fatal"
       ),
       type = as_factor(type),
-      type = fct_relevel(type, levels = c("Property Damage", "Personal Injury", "Fatal")),
+      #type = fct_relevel(type, levels = c("Property Damage", "Personal Injury", "Fatal")),
       date = as_date(date, format = "%m/%d/%y")
     )
 }
