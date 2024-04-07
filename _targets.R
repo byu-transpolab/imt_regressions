@@ -29,10 +29,7 @@ for (file in list.files("R", full.names = TRUE)){
 
 # Replace the target list below with your own:
 list(
-  tar_target(ett_data_file, "data/TIM Phase III Data for ETT analysis.csv",
+  tar_target(ETTDataFile, "data/TIM Phase III Data for ETT analysis_T7T5.csv",
              format = "file"),
-  tar_target(ett_data, read_ett(ett_data_file)),
-  tar_target(ett_models, estimate_ett_models(ett_data)),
-  tar_target(rt_models, estimate_rt_models(ett_data))
-  
+  tar_target(LnETTVariables, get_data(ETTDataFile))
 )

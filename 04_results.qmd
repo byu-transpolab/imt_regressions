@@ -1,78 +1,404 @@
-## Results
+# Results
 
 ```{r setup, file = "R/chapter_start.R", include = FALSE}
 # a number of commands need to run at the beginning of each chapter. This
 # includes loading libraries that I always use, as well as options for 
 # displaying numbers and text.
+library(tidyverse)
 ```
 
 ```{r setup2, include = FALSE}
 # Other packages ------
 # These are packages that get used in this chapter but aren't part of the default set.
+library(modelsummary)
 ```
 
+The purpose of this section is to present the results of the regression analysis of the UDOT IMT program expansion. The IMT performance measures of RT, Ln RCT, and Ln ICT are analyzed with incident characteristics as independent variables to show the impact of the expansion of the IMT program as well as other variables that best describe each performance measure. User impacts of Ln AV, Ln ETT, and Ln EUC are then analyzed with both performance measures and incident characteristics as independent variables. Overall, user impacts have many more variables that explain them with significantly better fit than do performance measures with the prime variable being Ln T~7~-T~0~, representing the natural log transformed total time which an incident significantly decreases the average speed of traffic.
 
-
-
-```{r loadmodels}
-tar_load(rt_models)
-tar_load(ett_models)
+```{r}
+LnETTVariables <- read.csv("data/TIM Phase III Data for ETT analysis Final.csv") %>% 
+  select(Ln.ETT,Year,Ln.AV,Crash.Type,Number.of.IMT.Teams,Number.of.UHP.Teams,RT.for.IMT.min,Ln.RCT.for.IMT,Ln.ICT.for.IMT,Number.of.Lanes.Closed,Time.Weighted.Number.of.Lanes.Closed,Roadway.Capacity,Ln.T7.T5,Ln.T7.T0,Time.Range,Ln.ICT.for.UHP,Lanes.at.Bottleneck,Ln.Cost) %>% 
+  
+  transmute(LnETT = Ln.ETT,
+            LnAV = Ln.AV,
+            LnEUC = Ln.Cost,
+            RT = RT.for.IMT.min,
+            LnRCT = Ln.RCT.for.IMT,
+            LnICT = Ln.ICT.for.IMT,
+            Year = factor(Year, levels = c("2022","2018")),
+            CrashType = factor(Crash.Type, levels = c("PI Crash","PD Crash","Fatal")),
+            NumTeams = Number.of.IMT.Teams,
+            NumUHP = Number.of.UHP.Teams,
+            TotalLanes = Lanes.at.Bottleneck,
+            LanesClosed = Number.of.Lanes.Closed,
+            TWNLC = Time.Weighted.Number.of.Lanes.Closed,
+            Capacity = Roadway.Capacity,
+            LnT7T5 = Ln.T7.T5,
+            LnT7T0 = Ln.T7.T0,
+            TimeRange = Time.Range)
 ```
 
+## Performance Measures
 
+The IMT performance measures of RT, Ln RCT, and Ln ICT were analyzed in a regression analysis against several incident characteristics. Overall, the program expansion results in minor improvements in RT but not for RCT and ICT. However, the analysis of performance measures provides models of comparable to fit to those of robust previous studies such as @mumtarin_traffic_2023 using continuous variables such as the number of IMTs, UHP teams, lanes Closed, and the TWNLC as well as capacity ratio variables, which provide a significantly better overall fit compared to the non-continuous variables of crash type and time range, as shown in the models of this subsection.
+
+IMT RT is primarily described by the number of IMTs responding to an incident and the capacity of the roadway based on the number of lanes closed as represented by the TWNLC and Capacity ratio variables, which variables are included in the statistical models in @tbl-rtmodels. The year 2018 variable indicates that IMTs took approximately 2.7 minutes longer to respond to crashes in 2018 before the expansion than in 2022 when there were more units. The number of IMTs variable indicates that IMT RT decreased by approximately 1.5 minutes for each added IMT that responded to an incident, showing that crashes where more IMTs were required were treated more urgently after detection than those where fewer IMTs responded. The TWNLC coefficient of 1.931 minutes indicates that IMTs took almost 2 minutes longer to respond for each 1.0 incremental increase in the average numer of lanes closed throughout the crash. This suggests that IMTs could not reach the crash site as quickly due to congestion when more lanes were closed.
+
+The capacity ratio variable describes the same phenomenon but is normalized for the total number of lanes at the bottleneck. A 1.0 decrease in the capacity ratio (from 1.0 to 0) represents TWNLC changing from no lanes being closed to all lanes being closed, which severely increases IMT RT. For example, a crash where 1 out of 4 lanes were closed after an incident occured until cleared by IMTs would have a capacity ratio of 0.75 and the coefficient (representing the change in IMT RT based on the ratio) would be 0.75 times -9.856 minutes, or 7.392 minutes less than intercept, where the intercept represents the IMT RT value for the base condition of a capacity ratio of 0. More lanes closed for part or all of the duration of an incident increases the average number of lanes closed for the time period before lanes were reopened - resulting in a higher RT value. The TWNLC RT model has a significantly lower intercept than in the capacity ratio RT model, which represents a high RT value for the base condition of a capacity ratio of 0.
+
+The time range variable was only statistically significant for the Morning Off Peak range; a coefficient of between 39 and 42 shows that IMTs took significantly longer to respond to crashes in the early morning than in the afternoon off peak. The lanes closed and crash type variables were also analyzed but did not help to improve the fit of the model or help further explain differing values of IMT RT. A year 2018\*Number of IMTs interaction term was analyzed for but was also not statistically significant.
 
 ```{r tbl-rtmodels}
 #| label: tbl-rtmodels
-#| tbl-cap: Estimated Models of IMT Response Time
+#| tbl-cap: Estimated Models of IMT RT
+
+RTBase <- lm(RT ~ Year + TimeRange + NumTeams, data = LnETTVariables)
+RT_TWNLC <- lm(RT ~ Year + TimeRange + NumTeams + TWNLC, data = LnETTVariables)
+RT_Capacity <- lm(RT ~ Year + TimeRange + NumTeams + Capacity, data = LnETTVariables)
+
+RTmodels <- list("Base"=RTBase,"w/ TWNLC"=RT_TWNLC,"w/ Capacity Ratio"=RT_Capacity)
+
 cm <- c(
   "(Intercept)"  = "(Intercept)",
-  "typePersonal Injury" = "Personal injury crash (ref. property damage)",
-  "typeFatal"    = "Fatal crash (ref. property damage)",
-  "lanes_bottle" = "Total lanes on roadway",
-  "n_imt"        = "N. IMT units",
-  "n_uhp"        = "N. UHP units",
-  "year2022"     = "2022 dummy (ref. 2018)"
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "TimeRangeMorning Off Peak" = "Morning Off Peak (ref. Afternoon Off Peak)",
+  "TimeRangeAM Peak" = "AM Peak (ref. Afternoon Off Peak)",
+  "TimeRangePM Peak" = "PM Peak (ref. Afternoon Off Peak)",
+  "TimeRangeNight Off Peak" = "Night Off Peak (ref. Afternoon Off Peak)",
+  "NumTeams"        = "N. IMTs",
+  "TWNLC" = "Time Weighted Number of Lanes Closed",
+  "Capacity" = "Capacity Ratio of Roadway"
   )
 
 modelsummary(
-  rt_models, 
+  RTmodels, 
   stars = TRUE,
   coef_map = cm, 
-  notes = list('Dependent variable: $\\log$(Response time).', 
+  notes = list('Dependent variable: RT', 
                "Standard errors in parentheses"),
   gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
 
-@tbl-rtmodels shows regression estimates of models predicting the natural log of
-the IMT response time. A Base model
+Ln RCT models shown in @tbl-rctmodels includes the variables that were found to best explain RCT. The year 2018 variable was found to be moderately statistically significant; its coefficient explains that IMT RCT had a multiplicative difference of approximately e^-0.17^, or 0.84, between 2018 and 2022 crashes, showing that IMTs responded to crashes approximately 16 percent faster in 2018. While the reason for this is not fully explained by these models, it should be noted that the PDO crash type variables is highly statistically significant and has a multiplicative difference with the reference case of PI crashes of approximately e^-0.4^, or 0.67, showing that PI crashes required approximately 33 percent more time to clear than PDO crashes.
 
+The other incident characteristics included as independent variables describing RCT are IMT RT, the number of UHP teams, and the number of IMTs. Each added minute of RT results in an increase of approximately e^0.02^, or 2 percent, in RCT, indicating that IMT RT incurs minor impacts on RCT. The addition of each UHP team and IMT that respond to each crash is approximately e^0.11^ and e^0.19^, or 1.12 and 1.21, times higher RCT values. The crash type variable was analyzed but was not statistically significant and was thus not included in the Ln RCT models.
 
-```{r tbl-ettmodels}
-#| label: tbl-ettmodels
-#| tbl-cap: Estimated Models of Excess Travel Time
+```{r tbl-rctmodels}
+#| label: tbl-rctmodels
+#| tbl-cap: Estimated Models of RCT
+
+LnRCTBase <- lm(LnRCT ~ Year + CrashType + RT, data = LnETTVariables)
+LnRCTUHPs <- lm(LnRCT ~ Year + CrashType + RT + NumUHP, data = LnETTVariables)
+LnRCTTeams <- lm(LnRCT ~ Year + CrashType + RT + NumUHP + NumTeams, data = LnETTVariables)
+
+rctmodels <- list("Ln RCT Base"=LnRCTBase,"Ln RCT w/UHPs"=LnRCTUHPs,"Ln RCT w/ all teams"=LnRCTTeams)
+
 cm <- c(
   "(Intercept)"  = "(Intercept)",
-  "typePersonal Injury" = "Personal injury crash (ref. property damage)",
-  "typeFatal"    = "Fatal crash (ref. property damage)",
-  "lanes_bottle" = "Total lanes on roadway",
-  "n_imt"        = "N. IMT units",
-  "n_uhp"        = "N. UHP units",
-  "year2022"     = "2022 dummy (ref. 2018)",
-  "log(rt_imt)"       = "IMT response time",
-  "year2022:log(rt_imt)" = "2022 $\\times$ IMT Response time"
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "CrashTypePD Crash" = "PDO Crash (ref. PDO)",
+  "CrashTypeFatal"    = "FII crash (ref. PI)",
+  "RT" = "IMT RT",
+  "NumUHP"        = "N. UHP Teams",
+  "NumTeams"        = "N. IMTs"
   )
 
 modelsummary(
-  ett_models, 
+  rctmodels, 
   stars = TRUE,
   coef_map = cm, 
-  notes = list('Dependent variable: $\\log$(Excess  travel time).', 
+  notes = list('Dependent variable: Ln RCT', 
                "Standard errors in parentheses"),
   gof_map = c("nobs", "r.squared", "adj.r.squared"))
 ```
 
-@tbl-ettmodels shows estimates of regression models predicting the excess travel time.
+IMT ICT models are estimated in @tbl-imtictmodels. The year 2018 variable is not statistically significant in each of the models, showing that the expansion of the IMT program does not make a significant difference on IMT ICT. The independent variables that best describe IMT ICT are the number of UHP teams, number of IMTs, TWNLC, and IMT RT. In the final model, the coefficients for the number of UHP teams and IMTs indicate that each additional response results in an increase in IMT ICT of a factor of approximately e^0.089^ and e^0.150^, or 1.09 and 1.16 for UHP teams and IMTs, respectively. The TWNLC coefficient of 0.08 indicates that IMTs took approximately e^0.08^, or 1.08 times longer to respond to clear the crash and the exit the site for each 1.0 incremental increase in the average number of lanes closed throughout the incident. IMT RT increased IMT ICT minorly by a factor of e^0.012^, or 1.01, for each added minute of RT.
+
+```{r tbl-ictmodels}
+#| label: tbl-imtictmodels
+#| tbl-cap: Estimated Models of IMT ICT
+
+LnICTBase <- lm(LnICT ~ Year + NumUHP,data = LnETTVariables)
+LnICTIMTs <- lm(LnICT ~ Year + NumUHP + NumTeams,data = LnETTVariables)
+LnICTTWNLC <- lm(LnICT ~ Year + NumUHP + NumTeams + TWNLC,data = LnETTVariables)
+LnICTRT <- lm(LnICT ~ Year + NumUHP + NumTeams + TWNLC + RT,data = LnETTVariables)
+
+ICTmodels <- list("Base"=LnICTBase,"Ln IMT ICT w/N. IMTs"=LnICTIMTs,"Ln IMT ICT w/TWNLC"=LnICTTWNLC,"Ln IMT ICT w/IMT RT"=LnICTRT)
+
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "NumUHP"        = "N. UHP Teams",
+  "NumTeams"        = "N. IMTs",
+  "TWNLC"        = "Time Weighted Number of Lanes Closed",
+  "RT" = "IMT RT"
+  )
+
+modelsummary(
+  ICTmodels, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: Ln IMT ICT', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+## User Impacts
+
+The user impacts of Ln AV, Ln ETT, and Ln EUC are modeled in this subsection to demonstrate the impact of the UDOT IMT program expansion and identify the variables that best describe each user impact. The fit of statistical models to user impacts data is consistently better than for performance measures due to user impacts having more variables of close fit available in the crash data set that describe that phenomenons occurring within the data. The base variables included in each user impacts models are the year, crash type, time range, and Ln T~7~-T~0~, which is the dominant incident characteristic
+
+Ln AV is best described by the Ln T~7~-T~0~ and capacity ratio of roadway variables. The base model of @tbl-avmodels, which includes Ln T~7~-T~0~ as the only continuous variable along with all categorical variables, explains the majority of the data with an adjusted R^2^ value of 0.69 that only increases moderately with the addition of other variables and interaction terms in other models. This indicates that the number of vehicles affected by a crash is best explained by the time for which the speed of traffic is reduced significantly below normal during an incident. The coefficient of Ln T~7~-T~0~ in the "Base Ln AV" model of 0.906 indicates that the increase in the number of vehicles affected by a crash without being affected by other variables is equal to the multiplicative increase in Ln T~7~-T~0~ raised to the 0.906 power. For example, if Ln T~7~-T~0~ increases by 10 percent for a given incident, or a factor of 1.1, then AV will increase by a factor of 1.1^0.906^, or approximately 1.09, or if Ln T~7~-T~0~ increases by 50 percent for the same incident, then AV will increase by a factor of 1.5^0.906^, or approximately 1.44.
+
+```{r tbl-avmodels}
+#| label: tbl-avmodels
+#| tbl-cap: Estimated Models of Ln AV
+
+LnAVBase <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0,data = LnETTVariables)
+LnAVYear <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + LnT7T0*Year, data = LnETTVariables)
+LnAVT7T5 <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + LnT7T5, data = LnETTVariables)
+LnAVT7T5Year <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + LnT7T5*Year, data = LnETTVariables)
+LnAVCapacity <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + Capacity,data = LnETTVariables)
+LnAVCapacityT7T0 <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + Capacity + Capacity*LnT7T0,data = LnETTVariables)
+LnAVLanes <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + TotalLanes,data = LnETTVariables)
+LnAVLanesYear <- lm(LnAV ~ Year + CrashType + TimeRange + LnT7T0 + LnT7T0*Year + TotalLanes + TotalLanes*Year,data = LnETTVariables)
 
 
-### Predictions
+LnAVmodels <- list("Ln AV Base" = LnAVBase, "Base w/ Ln T7-T0*Year 2018" = LnAVYear, "Base w/ Ln T7-T5" = LnAVT7T5, "Base w/ Ln T7-T5*Year 2018" = LnAVT7T5Year, "Base w/ Capacity Ratio" = LnAVCapacity, "Base w/ Capacity Ratio*Ln T7-T0" = LnAVCapacityT7T0,"Base w/ Total Lanes at Bottleneck" = LnAVLanes, "Base w/ Total Lanes*Year 2018" = LnAVLanesYear)
 
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "CrashTypePD Crash" = "PDO Crash (ref. PI Crash)",
+  "CrashTypeFatal" = "FII Crash (ref. PI Crash)",
+  "TimeRangeMorning Off Peak" = "Morning Off Peak (ref. Afternoon Off Peak)",
+  "TimeRangeAM Peak" = "AM Peak (ref. Afternoon Off Peak)",
+  "TimeRangePM Peak" = "PM Peak (ref. Afternoon Off Peak)",
+  "TimeRangeNight Off Peak" = "Night Off Peak (ref. Afternoon Off Peak)",
+  "LnT7T0"        = "Ln T7-T0",
+  "Year2018:LnT7T0" = "Ln T7-T0*Year 2018",
+  "LnT7T5" = "Ln T7-T5",
+  "Year2018:LnT7T5" = "Ln T7-T5*Year 2018",
+  "Capacity" = "Capacity Ratio of Roadway",
+  "LnT7T0:Capacity" = "Capacity Ratio*Ln T7-T0",
+  "TotalLanes" = "Total N. of Lanes at Bottleneck",
+  "Year2018:TotalLanes" = "Total Lanes*Year 2018")
+
+modelsummary(
+  LnAVmodels, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: Ln AV', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+```
+
+The Year 2018 variable in the base model is moderately statistically significant with a coefficient of 0.107, which indicates that the number of vehicles affected by crashes responded to by IMTs in 2018 that is not accounted for by other variables is higher than that of 2022 by a factor of e^0.107^, or 1.11. This suggests that the IMT program expansion with an increased number of units covering Utah roadways decreased the number of vehicles affected by crashes responded to by IMTs by approximately 11 percent. Another variable controlled for is the change in Ln T~7~-T~0~ between 2018 and 2022 with the addition of a Year 2018 interaction term to the Ln T~7~-T~0~ variable added to the "Base w/ Ln T~7~-T~0~\*Year 2018" model. This variable being suggestively statistically significant indicates that there is somewhat of a difference in the log-linear slope of Ln AV vs Ln T~7~-T~0~ for year 2018 from the reference case of year 2022, as shown in @fig-LnAVvsLnT7T0_year. A positive coefficient of 0.116 indicates that an increase in Ln T~7~-T~0~ will have a slightly greater non-linear effect in 2018 than in 2022, with a 10 percent increase in either year causing 2018 to be 1.1^0.116^, or 1.01, times higher than that of 2022. Note that the Year 2018 variable for this model and all other models with a Year 2018 interaction term are both statistically non-significant and have a negative value in this model and other models with a Year 2018 interaction due to the log-linear slope being slightly greater in 2018 causing a downward shift to the Year 2018 plus intercept for 2018 crashes.
+
+```{r}
+
+#| label: fig-LnAVvsLnT7T0_year
+#| fig-cap: Scatter Plot of Ln AV vs Ln T7-T0 by Year
+
+LnETTVariables %>% 
+  ggplot(aes(x = LnT7T0, y = LnAV, color = factor(Year))) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(y = "Ln AV", x = "Ln T7-T0") + 
+  scale_color_discrete(name = "Year")
+```
+
+The Ln T~7~-T~5~ variable is applicable to crashes where the speed of traffic remains significantly below normal for longer than IMTs spend clearing all lanes of the roadway. The Ln T~7~-T~5~ coefficient in the "Base w/ Ln T~7~-T~5~" model is 0.063, indicating that Ln T~7~-T~5~ increases AV minorly by a factor of 1.1^0.063^, or 1.006. In the "Base w/ Ln T~7~-T~5~\*Year 2018" model, the Ln T~7~-T~5~\*Year 2018 interaction term is statistically significant, indicating that there is a difference in Ln T~7~-T~5~ values between 2018 and 2022 and that the log-linear slope of Ln T~7~-T~5~ is different between the two years. However, because the Ln T~7~-T~5~\*Year 2018 coefficient has a value of 0.131, this indicates a very low difference in Ln AV due to an increase in Ln T~7~-T~5~ between 2018 and 2022 of 1.1^0.131^, or 1.01.
+
+The addition of the capacity ratio variable and a capacity ratio\*Ln T~7~-T~0~ interaction term provide a somewhat better fit for the the Ln AV models in @tbl-avmodels. However, these models are not as meaningful as the "Base w/ Total Lanes at Bottleneck" and "Base w/ Total Lanes\*Year 2018" models because, while the capacity ratio does account for the capacity reduction of the roadway based on average number of lanes closed for the duration of the incident, it is normalized by the number of lanes at the bottleneck. An incident with 1 lane closed on roadway with 7 lanes (resulting in a capacity ratio of 0.86) will still likely have a significantly higher Ln AV than an incident with 1 lane closed on a roadway with 3 lanes (resulting in a capacity ratio of 0.67) due to the 7-lane roadway having a significantly higher volume of vehicles than the 3-lane roadway even though the capacity ratio was lower. The capacity ratio also is colinear with the total lanes variable, making it a redundant variable with the total lanes variable. Other lane variables including TWNLC and the number of lanes closed were also not found to help explain Ln AV. Each performance measure was not statistically significant with Ln AV when included in the "Ln AV Base" model with the Ln T~7~-T~0~ variable due to most performance measures being colinear with Ln T~7~-T~0~ but not offering any additional explanation of Ln AV in regression models.
+
+The Total Lanes coefficient in the "Base w/ Total Lanes at Bottleneck" model indicates that each added lane at the bottleneck of a crash results in an increase in AV by a factor of e^0.177^, or 1.19, due to roads with more lanes having significantly higher volumes of vehicles that may be impacted by a crash. The Total Lanes\*Year 2018 Interaction term indicates a lower log-linear slope for 2018 crashes for Ln AV vs Total Lanes as shown in @fig-LnAVvsTotalLanes by a factor of e^-0.084^, or 0.92. This shows that 2018 crashes are less sensitive to the number of lanes at the bottleneck of a crash and that crashes will still affect a similar range of vehicles, regardless.
+
+```{r figLnAVvsTotalLanes}
+#| label: fig-LnAVvsTotalLanes
+#| fig-cap: Scatter Plot of Ln AV vs Total Lanes at the Bottleneck of a Crash
+
+LnETTVariables %>% 
+  ggplot(aes(x = TotalLanes, y = LnAV, color = Year)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(y = "Ln AV", x = "Total N. of Lanes at the Bottleneck")
+```
+
+Models for Ln ETT shown in @tbl-ettmodels1 also use the same variables as the "Ln AV Base" model to describe Ln ETT. The Year 2018 variable in each model without a Year 2018 interaction term has a coefficient value of between 0.4 and 0.5, indicating that crashes in 2018 experienced greater ETT by a factor of between e^0.4^ and e^0.5^, or 1.49 and 1.65, due to the increased number of IMTs in the program. This shows that while the number of vehicles affected by a crash in 2022 is reduced minorly from 2018 that the delay experienced by all users collectively decreases by approximately 50 percent for the reference case of PI crashes. The PDO crash type variable is not statistically significant in any Ln ETT model and has a low coefficient, indicating that the reduction in delay for PI crashes is also applicable for PDO crashes.
+
+The Ln T~7~-T~0~ variable explains the majority of the ETT experienced by roadway users, and other variables help to further explain Ln ETT for different crash scenarios. The Ln T~7~-T~0~ coefficient in the "Ln ETT Base" model of 1.911 indicates that a 10 percent increase in T~7~-T~0~, or the time for which the average speed of traffic is reduced significantly below normal, results in an increase in ETT by a factor of 1.1^1.911^, or 1.20, showing that a 10 percent increase results in a 20 percent increase in the delay experienced by all users. The following models with lower Ln T~7~-T~0~ coefficients due to other variables helping to explain ETT indicate that for the same 10 percent increase in T~7~-T~0~ that it would result in a multiplicative increase in ETT ranging from 1.1^1.21^ to 1.1^1.77^, or from 1.12 to 1.18, depending on the variables including interaction terms included in the model. A Ln T~7~-T~0~\*Year 2018 interaction term was analyzed for but was not statistically significant, showing that the difference between the length of Ln T~7~-T~0~ in 2018 and 2022 did not have a significant impact on the delay experienced by roadway users.
+
+```{r tbl-ettmodels1}
+#| label: tbl-ettmodels1
+#| tbl-cap: Estimated Models of Ln ETT
+
+LnETTBase <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0, data = LnETTVariables)
+LnETTRCT <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT, data = LnETTVariables)
+LnETTT7T5 <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT + LnT7T5, data = LnETTVariables)
+LnETTT7T5Year <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT + LnT7T5 + LnT7T5*Year, data = LnETTVariables)
+LnETTT7T5Lanes <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT + LnT7T5 + LnT7T5*Year + LanesClosed, data = LnETTVariables)
+LnETTRCTT7T5 <- lm(LnETT ~ Year + CrashType + TimeRange + LnRCT + LnT7T5 + LnT7T5*Year, data = LnETTVariables)
+
+
+LnETTmodels <- list("Ln ETT Base" = LnETTBase, "Base w/ Ln RCT" = LnETTRCT, "Ln RCT w/ Ln T7-T5" = LnETTT7T5, "Ln T7-T5*Year 2018" = LnETTT7T5Year, "Ln T7-T5*Year w/ N. of Lanes Closed" = LnETTT7T5Lanes, "Base substituting Ln RCT and Ln T7-T5 for Ln T7-T0" = LnETTRCTT7T5)
+
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "CrashTypePD Crash" = "PDO Crash (ref. PI Crash)",
+  "CrashTypeFatal" = "FII Crash (ref. PI Crash)",
+  "TimeRangeMorning Off Peak" = "Morning Off Peak (ref. Afternoon Off Peak)",
+  "TimeRangeAM Peak" = "AM Peak (ref. Afternoon Off Peak)",
+  "TimeRangePM Peak" = "PM Peak (ref. Afternoon Off Peak)",
+  "TimeRangeNight Off Peak" = "Night Off Peak (ref. Afternoon Off Peak)",
+  "LnT7T0"        = "Ln T7-T0",
+  "LnRCT" = "Ln RCT",
+  "LnT7T5" = "Ln T7-T5",
+  "Year2018:LnT7T5" = "Ln T7-T5*Year 2018",
+  "LanesClosed" = "N. of Lanes Closed")
+
+modelsummary(
+  LnETTmodels, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: Ln ETT', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+```
+
+The Ln RCT variable being added to the base model does not have a large impact on ETT with a 10 percent increase in RCT resulting in a multiplicative increase in ETT of only 1.1^0.203^, or 1.02. When Ln T~7~-T~5~ is added with Ln RCT to the base model, it results in an increase in the impact of RCT on ETT to a factor of 1.1^0.411^, or 1.04, for 10 percent increase in RCT, and Ln T~7~-T~5~ yields a minimal impact on ETT with 10 percent increase in T~7~-T~5~ (coefficient of 0.149) yielding a multiplicative increase in ETT of only 1.1^0.149^, or 1.01. The addition of the Ln T~7~-T~5~\*Year 2018 interaction term indicates that Ln T~7~-T~5~ has a greater impact on 2018 crashes than 2022 crashes by a factor of 1.1^0.253^, or 1.02, for every 10 percent increase in Ln T~7~-T~5~.
+
+The variables of Ln RCT and Ln T~7~-T~5~ together approximate Ln ETT almost as well as Ln T~7~-T~0~ when modeled as independent variables without Ln T~7~-T~0~, having an adjusted R^2^ value equal to that of the "Ln ETT Base" model, since RCT represents the majority of the time of the beginning of the crash from T~1~ to T~5~, and T~7~ to T~5~ represents the after-effects of the crash. This is shown when comparing the "Ln ETT Base" model and "Base substituting Ln RCT and Ln T~7~-T~5~ for Ln T~7~-T~0~" models. However, Ln T~7~-T~0~ includes all time stamps within the duration of a crash, namely the T~1~ to T~0~ portion that RCT does not include, and does not have the limitation on the number of data points within the data set that Ln T~7~-T~5~ has, being restricted to crashes for which the effects clear before lanes are cleared. However, the addition of the lanes closed variable as shown in the last model in @tbl-ettmodels1 helps to explain ETT with some improved accuracy.
+
+@tbl-ettmodels2 shows the "Base w/ Lanes Closed" model, which isolates the effects of the lanes closed variable on the "Ln ETT Base" model. The N. of Lanes Closed coefficient of 0.376 indicates that for each lane closed at any point during incident response that Ln ETT increases by a factor of e^0.376^, or 1.46, showing that an additional lane closed for any amount of time during an incident results in significantly higher delay for roadway users. The Lanes Closed\*Year 2018 interaction term coefficient of -0.166 indicates that the effect of an added lane in 2018 results in less added ETT than in 2022 by a factor of e^-0.166^, or 0.85. This is illustrated in @fig-LnETTvsLanesClosed where the log-linear slope of Ln ETT vs N. of Lanes Closed is lower in 2018, showing that crashes in this year were slightly less sensitive to the effects of an additional lane closed than 2022.
+
+```{r tbl-ettmodels2}
+#| label: tbl-ettmodels2
+#| tbl-cap: Estimated Models of Ln ETT Continued
+
+LnETTLanes <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + LanesClosed, data = LnETTVariables)
+LnETTLanesYear <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + LanesClosed + LanesClosed*Year, data = LnETTVariables)
+LnETTTWNLC <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + TWNLC, data = LnETTVariables)
+LnETT_TotalLanes <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + TotalLanes, data = LnETTVariables)
+LnETTCapacity <- lm(LnETT ~ Year + CrashType + TimeRange + LnT7T0 + Capacity, data = LnETTVariables)
+
+LnETTmodels2 <- list("Base w/ N. of Lanes Closed" = LnETTLanes, "Base w/ Lanes Closed*Year 2018" = LnETTLanesYear, "Base w/ TWNLC" = LnETTTWNLC, "Base w/ N. of Total Lanes at Bottleneck" = LnETT_TotalLanes,"Base w/ Capacity Ratio" = LnETTCapacity)
+
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "CrashTypePD Crash" = "PDO Crash (ref. PI Crash)",
+  "CrashTypeFatal" = "FII Crash (ref. PI Crash)",
+  "TimeRangeMorning Off Peak" = "Morning Off Peak (ref. Afternoon Off Peak)",
+  "TimeRangeAM Peak" = "AM Peak (ref. Afternoon Off Peak)",
+  "TimeRangePM Peak" = "PM Peak (ref. Afternoon Off Peak)",
+  "TimeRangeNight Off Peak" = "Night Off Peak (ref. Afternoon Off Peak)",
+  "LnT7T0"        = "Ln T7-T0",
+  "LanesClosed" = "N. of Lanes Closed",
+  "Year2018:LanesClosed" = "Lanes Closed*Year 2018",
+  "TWNLC" = "Time Weighted N. of Lanes Closed (TWNLC)",
+  "TotalLanes" = "Total N. of Lanes at Bottleneck",
+  "Capacity" = "Capacity Ratio of Roadway")
+
+modelsummary(
+  LnETTmodels2, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: Ln ETT', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+The TWNLC variable being added to the "Ln ETT Base" model has a similar fit to the "Base w/ Lanes Closed" model. While TWNLC would was hypothesized to better describe the delay of users than the lanes closed variable after the number of lanes closed was normalized for the amount of time that each lane was actually closed for, the results indicate that these two variables explain ETT approximately equally as well. However, the TWNLC coefficient of 0.500 in the "Base w/ TWNLC" model being higher than that of the lanes closed variable (0.376) does indicate that TWNLC has a greater impact on ETT than the number of lanes closed variable, showing that the time for which a given lane is closed for does have a statistically significant effect on ETT. For each lane closed for the duration of the incident, ETT increases by a factor of e^0.500^, or 1.65. A TWNLC\*Year 2018 interaction term was analyzed for but was found not to be statistically significant, indicating that TWNLC had an equal effect on crashes and the delay experienced in both years.
+
+While the "Base w/ Total Lanes" and "Base w/ Capacity" models do not describe Ln ETT any better than the Lanes Closed and TWNLC variables, the total lanes variable indicates that crashes that occur on roadways with more lanes will experience more delay than others, with an impact on ETT of an additional e^0.194^, or 1.21, times more ETT, where the coefficient of the total number of lanes at bottleneck is 0.194. The capacity ratio has a negative coefficient of -1.088, indicating that a capacity ratio of 0.5 would lower the delay experienced for the base condition of capacity ratio of 0 with all lanes closed by a factor of e^-1.088^, or 0.34.
+
+```{r LnETTvsLanesClosed}
+#| label: fig-LnETTvsLanesClosed
+#| fig-cap: Scatter Plot of Ln ETT vs N. of Lanes Closed in a Crash
+
+LnETTVariables %>% 
+  ggplot(aes(x = LanesClosed, y = LnETT, color = Year)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(y = "Ln ETT", x = "N. of Lanes Closed")
+```
+
+Because EUC is defined as being a function of ETT that is adjusted only for AVO and the percentage of trucks on the roadway, Ln EUC and Ln ETT are highly correlated with and proportional to one another. Therefore, the coefficients in the Ln EUC models shown in @tbl-eucmodels1 and @tbl-eucmodels2 are virtually the same as those in @tbl-ettmodels1 and @tbl-ettmodels2 with minor insignificant differences. Therefore, all trends discussed previously on Ln ETT models are applicable to Ln EUC models.
+
+```{r}
+#| label: tbl-eucmodels1
+#| tbl-cap: Estimated Models of LnEUC
+
+LnEUCBase <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0, data = LnETTVariables)
+LnEUCRCT <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT, data = LnETTVariables)
+LnEUCT7T5 <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT + LnT7T5, data = LnETTVariables)
+LnEUCT7T5Year <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT + LnT7T5 + LnT7T5*Year, data = LnETTVariables)
+LnEUCT7T5Lanes <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + LnRCT + LnT7T5 + LnT7T5*Year + LanesClosed, data = LnETTVariables)
+LnEUCRCTT7T5 <- lm(LnEUC ~ Year + CrashType + TimeRange + LnRCT + LnT7T5 + LnT7T5*Year, data = LnETTVariables)
+
+
+LnEUCmodels <- list("Ln EUC Base" = LnEUCBase, "Base w/ Ln RCT" = LnEUCRCT, "Ln RCT w/ Ln T7-T5" = LnEUCT7T5, "Ln T7-T5*Year 2018" = LnEUCT7T5Year, "Ln T7-T5*Year w/ N. of Lanes Closed" = LnEUCT7T5Lanes, "Base substituting Ln RCT and Ln T7-T5 for Ln T7-T0" = LnEUCRCTT7T5)
+
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "CrashTypePD Crash" = "PDO Crash (ref. PI Crash)",
+  "CrashTypeFatal" = "FII Crash (ref. PI Crash)",
+  "TimeRangeMorning Off Peak" = "Morning Off Peak (ref. Afternoon Off Peak)",
+  "TimeRangeAM Peak" = "AM Peak (ref. Afternoon Off Peak)",
+  "TimeRangePM Peak" = "PM Peak (ref. Afternoon Off Peak)",
+  "TimeRangeNight Off Peak" = "Night Off Peak (ref. Afternoon Off Peak)",
+  "LnT7T0"        = "Ln T7-T0",
+  "LnRCT" = "Ln RCT",
+  "LnT7T5" = "Ln T7-T5",
+  "Year2018:LnT7T5" = "Ln T7-T5*Year 2018",
+  "LanesClosed" = "N. of Lanes Closed")
+
+modelsummary(
+  LnEUCmodels, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: Ln EUC', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+```{r tbl-eucmodels2}
+#| label: tbl-eucmodels2
+#| tbl-cap: Estimated Models of Ln EUC Continued
+
+LnEUCLanes <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + LanesClosed, data = LnETTVariables)
+LnEUCLanesYear <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + LanesClosed + LanesClosed*Year, data = LnETTVariables)
+LnEUCTWNLC <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + TWNLC, data = LnETTVariables)
+LnEUC_TotalLanes <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + TotalLanes, data = LnETTVariables)
+LnEUCCapacity <- lm(LnEUC ~ Year + CrashType + TimeRange + LnT7T0 + Capacity, data = LnETTVariables)
+
+LnEUCmodels2 <- list("Base w/ N. of Lanes Closed" = LnEUCLanes, "Base w/ Lanes Closed*Year 2018" = LnEUCLanesYear, "Base w/ TWNLC" = LnEUCTWNLC, "Base w/ N. of Total Lanes at Bottleneck" = LnEUC_TotalLanes,"Base w/ Capacity Ratio" = LnETTCapacity)
+
+cm <- c(
+  "(Intercept)"  = "(Intercept)",
+  "Year2018"     = "Year 2018 (ref. 2022)",
+  "CrashTypePD Crash" = "PDO Crash (ref. PI Crash)",
+  "CrashTypeFatal" = "FII Crash (ref. PI Crash)",
+  "TimeRangeMorning Off Peak" = "Morning Off Peak (ref. Afternoon Off Peak)",
+  "TimeRangeAM Peak" = "AM Peak (ref. Afternoon Off Peak)",
+  "TimeRangePM Peak" = "PM Peak (ref. Afternoon Off Peak)",
+  "TimeRangeNight Off Peak" = "Night Off Peak (ref. Afternoon Off Peak)",
+  "LnT7T0"        = "Ln T7-T0",
+  "LanesClosed" = "N. of Lanes Closed",
+  "Year2018:LanesClosed" = "Lanes Closed*Year 2018",
+  "TWNLC" = "Time Weighted N. of Lanes Closed (TWNLC)",
+  "TotalLanes" = "Total N. of Lanes at Bottleneck",
+  "Capacity" = "Capacity Ratio of Roadway")
+
+modelsummary(
+  LnEUCmodels2, 
+  stars = TRUE,
+  coef_map = cm, 
+  notes = list('Dependent variable: Ln EUC', 
+               "Standard errors in parentheses"),
+  gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
