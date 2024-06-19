@@ -55,9 +55,10 @@ format:
     journal:
       name: Transportation Research Part A
       cite-style: authoryear
+      formatting: review
+      model: 3p
     keep-tex: true
     top-level-division: section
     toc: false
 
-editor: visual
 
