@@ -12,6 +12,9 @@ index.spl
 A-Template-Quarto-Repository.tex
 elsarticle-harv.bst
 *_cache/
+*.log
+*.aux
+*.spl
 *-tikzDictionary
 *_files/
 site_libs/
