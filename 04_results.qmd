@@ -121,11 +121,30 @@ modelsummary(
 
 ```
 
-The *Year 2018* variable in the "Base" model is moderately statistically significant with a coefficient of 0.107, which indicates that the number of vehicles affected by crashes responded to by IMTs in 2018 that is not accounted for by other variables is higher than that of 2022 by a factor of e^0.107^, or 1.11. This suggests that the IMT program expansion with an increased number of units covering Utah roadways decreased the number of vehicles affected by crashes responded to by IMTs by approximately 11 percent. Another variable controlled for is the change in Ln T~7~-T~0~ between 2018 and 2022 with the addition of a *Year 2018\*Ln T~7~-T~0~* added to the "Interaction 1" model. This variable being suggestively statistically significant indicates that there is somewhat of a difference in the log-linear slope of Ln AV vs *Ln T~7~-T~0~* in 2018 from the reference case of 2022, as shown in @fig-LnAVvsLnT7T0_year. A positive coefficient of 0.116 indicates that an increase in T~7~-T~0~ will have a slightly greater effect in 2018 than in 2022, where a 10 percent increase in the T~7~-T~0~ would cause the AV of a 2018 crash to be 1.1^0.116^, or 1.01, times higher than that of 2022. Note that the *Year 2018* variable for this model and each model with a *Year 2018* interaction variable are both statistically non-significant and have a negative value in this model and other models with a *Year 2018* interaction due to the log-linear slope being slightly greater in 2018 causing a downward shift to the *Year 2018* plus intercept for 2018 crashes.
+The *Year 2018* variable in the "Base" model is moderately statistically
+significant with a coefficient of 0.107, which indicates that the number of
+vehicles affected by crashes responded to by IMTs in 2018 that is not accounted
+for by other variables is higher than that of 2022 by a factor of e^0.107^, or
+1.11. This suggests that the IMT program expansion with an increased number of
+units covering Utah roadways decreased the number of vehicles affected by
+crashes responded to by IMTs by approximately 11 percent. Another variable
+controlled for is the change in Ln T~7~-T~0~ between 2018 and 2022 with the
+addition of a *Year 2018\*Ln T~7~-T~0~* added to the "Interaction 1" model. This
+variable being suggestively statistically significant indicates that there is
+somewhat of a difference in the log-linear slope of Ln AV vs *Ln T~7~-T~0~* in
+2018 from the reference case of 2022, as shown in @fig-LnAVvsLnT7T0-year. A
+positive coefficient of 0.116 indicates that an increase in T~7~-T~0~ will have
+a slightly greater effect in 2018 than in 2022, where a 10 percent increase in
+the T~7~-T~0~ would cause the AV of a 2018 crash to be 1.1^0.116^, or 1.01,
+times higher than that of 2022. Note that the *Year 2018* variable for this
+model and each model with a *Year 2018* interaction variable are both
+statistically non-significant and have a negative value in this model and other
+models with a *Year 2018* interaction due to the log-linear slope being slightly
+greater in 2018 causing a downward shift to the *Year 2018* plus intercept for
+2018 crashes.
 
-```{r}
-
-#| label: fig-LnAVvsLnT7T0_year
+```{r LnAVvsLnT7T0-year}
+#| label: fig-LnAVvsLnT7T0-year
 #| fig-cap: Scatter Plot of Ln AV vs Ln T7-T0 by Year
 
 LnETTVariables %>% 
