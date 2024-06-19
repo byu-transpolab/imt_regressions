@@ -42,16 +42,25 @@ The total number of incidents contained in the 2018 and 2022 datasets were 1,097
 Summary statistics for the performance measures, user impacts, and other pertinent IMT data of years 2018 and 2022 are compared in @tbl-SummaryStats. All performance measures had large standard deviations from the mean due to the wide range of values contained for each parameter in the dataset. For IMT performance measures, the mean of RT decreased from 16.5 minutes in 2018 to 13.8 minutes in 2022, for a difference of 2.7 minutes with a standard error of 1.1 minute. However, IMT RCT and ICT increased by 8.9 minutes and 3.6 minutes, respectively, from 2018 to 2022, showing that IMTs did not necessarily clear all lanes of the roadway or leave the crash site any faster in 2022 than in 2018.
 
 ```{r tbl-SummaryStats}
-IMTSummaryStats <- read.csv("data/TIM Phase III Data for ETT analysis Final.csv") %>% 
-  
-  select(Year, Crash.Type, RT.for.IMT.min, RCT.for.IMT.Numeric.min, ICT.for.IMT.Numeric.min, Affected.Volume, Total.Excess.Travel.Time, Cost...., T7.T0.min) %>% 
-  
-  transmute(Year = Year,"Crash Type" = Crash.Type, RT = RT.for.IMT.min, RCT = RCT.for.IMT.Numeric.min, ICT = ICT.for.IMT.Numeric.min, "AV" = Affected.Volume, ETT = Total.Excess.Travel.Time, EUC = Cost...., "T7-T0" = T7.T0.min)
-
 #| label: tbl-SummaryStats
 #| tbl-cap: Summary Statistics for IMT Incidents Analyzed
 
-datasummary_balance(Median ~ Year,IMTSummaryStats)
+datasummary_balance(
+  ~ Year,  
+  IMTSummaryStats |>  
+    rename(`Response time (RT) [min]` = RT,
+           `Roadway clearance time (RCT) [min]` = RCT,
+           `Incident clearance time (ICT) [min]`= ICT,
+           `Affected volume (AV)[veh]` = AV,
+           `Excess travel time (ETT)[min]` = ETT,
+           `Excess user costs (EUC)[$]` = EUC) |> 
+    mutate(
+      `Crash Type` = case_when(
+        str_detect(`Crash Type`, "PD") ~ "Property damage",
+        str_detect(`Crash Type`, "PI") ~ "Injury",
+        str_detect(`Crash Type`, "Fatal") ~ "Fatal",
+      )
+    ))
 
 ```
 
