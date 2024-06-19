@@ -44,6 +44,8 @@ Summary statistics for the performance measures, user impacts, and other pertine
 ```{r tbl-SummaryStats}
 #| label: tbl-SummaryStats
 #| tbl-cap: Summary Statistics for IMT Incidents Analyzed
+IMTSummaryStats <- read_csv("data/TIM Phase III Data for ETT analysis Final.csv") |> 
+  select(Year, `Crash Type`, RT, RCT, ICT, AV, ETT, EUC, T7T0) 
 
 datasummary_balance(
   ~ Year,  
@@ -76,7 +78,8 @@ The ETT of an incident was found by calculating the ETT for each 5-minute increm
 
 EUC is the sum of the cost of ETT for passenger vehicles and trucks. Costs due to the ETT of passengers and trucks are the only factors considered in this analysis. The formula used for EUC is shown below where the percent trucks (T) was the portion of vehicles over 30 ft in length obtained from UDOT Traffic Data; the average vehicle occupancy (AVO) was taken as 1.14 for the I-15 based on @schultz_ut1503_2015; the individual hourly cost (IHC) and truck hourly cost (THC) were taken as \$17.81 and \$53.69 based on @ellis_value_2017. While the IHC and THC are somewhat outdated for the 2022 data, these values were still used to be consistent with 2018 EUC values to make a valid comparison free of the effects of inflation.
 
-$$EUC = ETT \times ((1-T) \times AVO \times IHC + T \times THC) $$
+$$EUC = ETT \times ((1-T) \times AVO \times IHC + T \times THC) $${#eq-euc}
+
 
 ## Models
 
@@ -100,15 +103,13 @@ The *Number of (N.) IMTs* that responded to a crash was included. Note that this
 
 The *Number of (N.) Lanes Closed* at any point during incident response was well correlated with ETT. A similar variable that was quantified to further investigate the effect of IMTs clearing a lane at any given time was the time weighted number of lanes closed (*TWNLC*). This is the time weighted average of the number of lanes closed during incident response, which was initially hypothesized to more precisely determine the user impacts of a crash. This was calculated using the following formula where t~i~ is the number of minutes that each given lane i was closed (0 minutes for lanes that were not closed), N is the number of lanes at the bottleneck of the crash, and t^\*^ is the total time for which any lane of the roadway was closed during an incident. One limitation of this parameter is that not all incidents analyzed for user impacts had all lane closures clearly defined without errors in the data to clearly determine *TWNLC*, therefore only 379 incidents of the 401 total number of incidents analyzed for user impacts (95 percent) could be analyzed for this parameter.
 
-$$ TWNLC = \frac{\sum_{i=1}^{N}t_i}{N \times t^*}
-$$
+$$ TWNLC = \frac{\sum_{i=1}^{N}t_i}{N \times t^*}$${#eq-twnlc}
 
 The *Total Number of (Total) Lanes* at the bottleneck of a crash was included for user impacts analysis as it was correlated with AV. The dominant independent variable for user impacts was *Ln T~7~-T~0~*, or the natural log of the difference between the time when the average speed of traffic during an incident returned to within approximately 20 mph of the average speed at normal conditions (T~7~) and the time when the incident occurred (T~0~). This is effectively the incident duration for which roadway users are impacted. A logarithmic transformation was applied due to the right-skew of the data and to achieve best fit in linear regression.
 
-The model groups analyzed to evaluate the UDOT IMT program expansion are as follows, $$ 
-{PM}_i = {Year}_i + {TR}_i + {CT}_i + X_i\beta
-$$ and $$ 
-{UI}_i = {Year}_i + {TR}_i + {CT}_i + {Ln(T_7 -T_0)}_i\beta + {PM}_i\beta + X_i\beta
-$$
+The model groups analyzed to evaluate the UDOT IMT program expansion are as follows, 
+$$ {PM}_i = {Year}_i + {TR}_i + {CT}_i + X_i\beta $$ {#eq-pmi}
+and
+$$ {UI}_i = {Year}_i + {TR}_i + {CT}_i + {Ln(T_7 -T_0)}_i\beta + {PM}_i\beta + X_i\beta$${#eq-uii}
 
 where the variable index $i$ denotes being for a single incident, PM is performance measure, TR is time range, CT is crash type, and $X$ is a vector of the other incident characteristics variables not listed above, and $\beta$ are estimated coefficients. While various models were evaluated for each performance measure and user impact, only those with most meaningful results are presented hereafter.
