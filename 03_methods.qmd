@@ -17,7 +17,12 @@ To estimate the impact of Utah's IMT program expansion, UHP CAD crash data and U
 
 The primary crash data source for this analysis was the UHP CAD database, which includes the timestamps of IMTs and UHP teams for each incident response. UHP provided the research team with a version of the data with confidential information redacted. The crash types included in the CAD data are PDO, PI, and FII. @fig-TIM_Timeline shows the timestamps required to calculate RT, RCT, and ICT. The timestamps needed for calculating performance measures are T~1~, T~4~, T~5~, and T~6~. T~1~ corresponds with the time when the incident was reported. T~2~ was assumed to be equal to T~1~ due to most incidents being reported by UHP officers who patrol for crashes that are then verified by UDOT Traffic Operations Center personnel. T~4~ is the time at which responders arrived at the incident location. T~5~ corresponds with the time when all lanes of traffic were cleared, and T~6~ corresponds with the time when first responders left the site. RT, RCT, and ICT are calculated by taking the difference of T~4~, T~5~, and T~6~ with T~1~, respectively. T~7~ is the time at which the flow of traffic returns approximately to normal flow conditions.
 
-![TIM timeline (adapted from @conkliin_data_2013).](images/TIM%20timeline.png){#fig-TIM_Timeline}
+```{r chunk}
+#| label: fig-TIM-Timeline
+#| fig-cap: TIM timeline (adapted from @conkliin_data_2013).
+#| out-width: 100%
+knitr::include_graphics("images/TIMtimeline.png")  
+```
 
 The CAD data were adequate to determine the performance measures of RT and ICT for most incidents but not for RCT, which was obtained from the UDOT TransSuite database. The TransSuite database includes the timestamps of lane closures, which were used for the T~5~ timestamp for each incident which TransSuite had the data available. An Excel Visual Basic for Applications (VBA) script was used to pair incidents from the CAD dataset and TransSuite dataset within a similar timeframe as potential matches for the same incident, and potential matches were evaluated and verified by the research team based on the locations and details included in both databases for the given incident. The lane closure data for confirmed matches were then integrated into the CAD data using a VBA script.
 
