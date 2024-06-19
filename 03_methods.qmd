@@ -2,7 +2,6 @@
 
 ```{r setup, file = "R/chapter_start.R", include = FALSE}
 library(tidyverse)
-library(targets)
 library(modelsummary)
 ```
 
@@ -12,37 +11,20 @@ library(modelsummary)
 library(kableExtra)
 ```
 
-To estimate the impact of Utah's IMT program expansion through regression analysis, UHP CAD crash data and UDOT TransSuite lane closures data were integrated, IMT performance measures were calculated for each incident after obtaining all required time stamps, and user impacts were quantified for each incident with qualifying characteristics.
+To estimate the impact of Utah's IMT program expansion, UHP CAD crash data and UDOT TransSuite lane closures data were integrated, IMT performance measures were calculated for each incident after obtaining all required timestamps, and user impacts were quantified for each incident with qualifying characteristics.
 
 ## Crash Dataset Integration
 
-<<<<<<< HEAD
-The primary crash data source for this analysis was the UHP CAD database, which includes the timestamps of IMTs and UHPs for each incident response. UHP provided the research team with a version of the data with confidential information redacted. The crash types included in the CAD data are Property Damage Only (PDO), Personal Injury (PI), and Fatal and Incapacitating Injury (FII). @fig-TIM_Timeline shows the timestamps required to calculate RT, RCT, and ICT. The time stamps needed for calculating performance measures are T~1~, T~4~, T~5~, and T~6~. T~1~ corresponds with the time when the incident was reported. T~2~ was assumed to be equal to T~1~ due to most incidents being reported by UHP officers who patrol for crashes that are then verified by TOC personnel. T~4~ is the time at which responders arrived at the incident location. T~5~ corresponds with the time when all lanes of traffic were cleared, and T~6~ corresponds with the time when first responders left the site. RT, RCT, and ICT are calculated by taking the difference of T~4~, T~5~, and T~6~ with T~1~, respectively. T~7~ is the time at which the flow of traffic returns approximately to normal flow conditions.
-=======
-The primary crash data source for this analysis was the UHP CAD database which includes the timestamps of IMTs and UHPs for each incident response. UHP provided the research team with a version of the data with confidential information redacted. The crash types included in the CAD data are Property Damage Only (PDO), Personal Injury (PI), and Fatal and Incapacitating Injury (FII). @fig-TIM_Timeline shows the timestamps required to calculate RT, RCT, and ICT. The time stamps needed for calculating performance measures are T~1~, T~4~, T~5~, and T~6~. T~1~ corresponds with the time when the incident was reported. T~2~ was assumed to be equal to T~1~ due to most incidents being reported by UHP officers who patrol for crashes that are then verified by TOC personnel. T~4~ is the time at which responders arrived at the incident location. T~5~ corresponds with the time when all lanes of traffic were cleared, and T~6~ corresponds with the time when first responders left the site. RT, RCT, and ICT are calculated by taking the difference of T~4~, T~5~, and T~6~ with T~1~, respectively.T~7~ is the time at which the flow of traffic returns approximately to normal flow conditions.
->>>>>>> c5e60559896b57dce2700b758d5bf7df8a79e5ff
+The primary crash data source for this analysis was the UHP CAD database, which includes the timestamps of IMTs and UHP teams for each incident response. UHP provided the research team with a version of the data with confidential information redacted. The crash types included in the CAD data are PDO, PI, and FII. @fig-TIM_Timeline shows the timestamps required to calculate RT, RCT, and ICT. The timestamps needed for calculating performance measures are T~1~, T~4~, T~5~, and T~6~. T~1~ corresponds with the time when the incident was reported. T~2~ was assumed to be equal to T~1~ due to most incidents being reported by UHP officers who patrol for crashes that are then verified by UDOT Traffic Operations Center personnel. T~4~ is the time at which responders arrived at the incident location. T~5~ corresponds with the time when all lanes of traffic were cleared, and T~6~ corresponds with the time when first responders left the site. RT, RCT, and ICT are calculated by taking the difference of T~4~, T~5~, and T~6~ with T~1~, respectively. T~7~ is the time at which the flow of traffic returns approximately to normal flow conditions.
 
-![TIM timeline (adapted from Conklin et al. 2013).](images/TIM%20timeline.png){#fig-TIM_Timeline}
+![TIM timeline (adapted from @conkliin_data_2013).](images/TIM%20timeline.png){#fig-TIM_Timeline}
 
-The CAD data were adequate to determine the performance measures of RT and ICT for most incidents but not for RCT, which was obtained from the UDOT TransSuite database which included the time stamps of lane closures, which were used for the T~5~ time stamp for each incident which TransSuite had the data available. An Excel Visual Basic for Applications (VBA) script was used to pair incidents from the CAD data set and TransSuite data set within a similar time frame as potential matches for the same incident, and potential matches were evaluated and verified by the research team based on the locations and details included in both databases for the given incident. The lane closure data for confirmed matches were then integrated into the CAD data through a following VBA script.
+The CAD data were adequate to determine the performance measures of RT and ICT for most incidents but not for RCT, which was obtained from the UDOT TransSuite database. The TransSuite database includes the timestamps of lane closures, which were used for the T~5~ timestamp for each incident which TransSuite had the data available. An Excel Visual Basic for Applications (VBA) script was used to pair incidents from the CAD dataset and TransSuite dataset within a similar timeframe as potential matches for the same incident, and potential matches were evaluated and verified by the research team based on the locations and details included in both databases for the given incident. The lane closure data for confirmed matches were then integrated into the CAD data using a VBA script.
 
-The total number of incidents contained in the 2018 and 2022 data sets were 1,097 and 1,526, respectively, which were both taken for the months of March through August. Of these total incidents, approximately 74 and 66 percent of incidents were PDO crashes for 2018 and 2022, respectively. PI crashes made up 26 and 34 percent of the total number of crashes, for 2018 and 2022, respectively, and FII crashes made up less than 1 percent for both years, as shown in @tbl-crashdistribution . This shows a similar crash distribution between 2018 and 2022 but with a shift to a higher frequency of PI crashes in 2022 than in 2018.
-
-| Crash Severity Type | 2018 Crashes | 2018 Distribution | 2022 Crashes | 2022 Distribution |
-|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-|         FII         |      10      |       \<1%        |      9       |       \<1%        |
-|         PI          |     280      |        26%        |     512      |        34%        |
-|         PDO         |     807      |        74%        |    1,005     |        66%        |
-|        Total        |    1,097     |       100%        |    1,526     |       100%        |
-
-: Crash Distribution {#tbl-crashdistribution}
-
-## IMT Performance Measures
-
-Nearly all incidents had an ICT value and the majority had an RT value, as shown in @tbl-datatype. However, only 28 percent of incidents in 2018 and 21 percent of incidents in 2022 had an available RCT value. This reduced the total number of incidents with all necessary time stamps and performance measures (RT, RCT, and ICT) to 283 and 307 incidents for 2018 and 2022, respectively, leaving only 26 percent and 20 percent of the original number of incidents, respectively.
+The total number of incidents contained in the 2018 and 2022 datasets were 1,097 and 1,526, respectively, which were both taken for the months of March through August. Of these total incidents, the majority were PDO crashes. PI crashes made up a minor portion and FII crashes made up less than one percent for both years. Nearly all incidents had an ICT value and the majority had an RT value, as shown in @tbl-datatype. However, only 28 percent of incidents in 2018 and 21 percent of incidents in 2022 had an available RCT value due to TranSuite only overlapping with the CAD database for that portion of incidents. This reduced the total number of incidents with all necessary timestamps and performance measures (RT, RCT, and ICT) to 283 and 307 incidents for 2018 and 2022, respectively, leaving only 26 percent and 20 percent of the original number of incidents, respectively.
 
 |              Data Type              | 2018 Crashes | 2018 Percentage | 2022 Crashes | 2022 Percentage |
-|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+|:-----------------------------------:|:------------:|:---------------:|:------------:|:---------------:|
 |              Incidents              |    1,097     |      100%       |    1,526     |      100%       |
 |                 ICT                 |    1,089     |       99%       |    1,520     |      \>99%      |
 |                 RT                  |     944      |       86%       |    1,272     |       83%       |
@@ -52,240 +34,67 @@ Nearly all incidents had an ICT value and the majority had an RT value, as shown
 
 : Data Type {#tbl-datatype}
 
-The distribution of IMT RT for the years of 2018 and 2022 is shown in @fig-RT2018 and @fig-RT2022, respectively. The distribution shifted from 58 percent of incidents responded to within the first 15 minutes of a crash in 2018 to 62 percent in 2022, yielding a percent difference of approximately 7 percent between the two years. This shows that IMTs responded slightly faster to incidents in 2022 after the program expansion, likely due to having more teams to respond to more crashes more quickly.
+Summary statistics for the performance measures, user impacts, and other pertinent IMT data of years 2018 and 2022 are compared in @tbl-SummaryStats. All performance measures had large standard deviations from the mean due to the wide range of values contained for each parameter in the dataset. For IMT performance measures, the mean of RT decreased from 16.5 minutes in 2018 to 13.8 minutes in 2022, for a difference of 2.7 minutes with a standard error of 1.1 minute. However, IMT RCT and ICT increased by 8.9 minutes and 3.6 minutes, respectively, from 2018 to 2022, showing that IMTs did not necessarily clear all lanes of the roadway or leave the crash site any faster in 2022 than in 2018.
 
-```{r fig-RT2018}
-PMHistogramData <- read.csv("data/PMHistogram.csv")
-
-#| label: fig-RT2018
-#| fig-cap: Distribution of 2018 IMT RT
-
-PMHistogramData %>% 
-  filter(Year == 2018) %>% 
-  filter(PM == "RT") %>% 
-  ggplot(aes(x = Min,y = Frequency, fill = Crash.Type)) + 
-  geom_bar(stat = "identity",position = "stack") + 
-  labs(x = "Minutes of IMT RT") +
-  scale_fill_discrete(name = "Crash Type")
+```{r tbl-SummaryStats}
+IMTSummaryStats <- read.csv("data/TIM Phase III Data for ETT analysis Final.csv") %>% 
   
-```
+  select(Year, Crash.Type, RT.for.IMT.min, RCT.for.IMT.Numeric.min, ICT.for.IMT.Numeric.min, Affected.Volume, Total.Excess.Travel.Time, Cost...., T7.T0.min) %>% 
+  
+  transmute(Year = Year,"Crash Type" = Crash.Type, RT = RT.for.IMT.min, RCT = RCT.for.IMT.Numeric.min, ICT = ICT.for.IMT.Numeric.min, "AV" = Affected.Volume, ETT = Total.Excess.Travel.Time, EUC = Cost...., "T7-T0" = T7.T0.min)
 
-```{r fig-RT2022}
+#| label: tbl-SummaryStats
+#| tbl-cap: Summary Statistics for IMT Incidents Analyzed
 
-#| label: fig-RT2022
-#| fig-cap: Distribution of 2022 IMT RT
-
-PMHistogramData %>% 
-  filter(Year == 2022) %>% 
-  filter(PM == "RT") %>% 
-  ggplot(aes(x = Min,y = Frequency, fill = Crash.Type)) + 
-  geom_bar(stat = "identity",position = "stack") + 
-  labs(x = "Minutes of IMT RT") +
-  scale_fill_discrete(name = "Crash Type")
+datasummary_balance(Median ~ Year,IMTSummaryStats)
 
 ```
 
-The distribution of IMT RCT for the years of 2018 and 2022 is shown in @fig-RCT2018 and @fig-RCT2022, respectively. The distribution shifted from 19 percent of incidents for which IMTs cleared all lanes of traffic within the first 45 minutes in 2018 to 13 percent of incidents in 2022, showing a percent decrease of approximately 32 percent between the two years, and that IMTs took longer to clear all lanes in 2022 than in 2018. While the reason for this is indefinite, the greater percentage of PI crashes in 2022 (34 percent) than in 2018 (26 percent) is a likely cause for longer RCTs in 2022 than in 2018. It was also observed for a previous UDOT study collecting 2020 crash data using the same methodology that IMT RCT was also longer in 2020 than in 2018 as noted in @schultz_analysis_2023. It was hypothesized that IMTs placed a higher priority on safety while aiding crash victims during the COVID-19 pandemic in 2020.
+For user impacts of crashes responded to by IMTs, AV decreased from an average of 7826.5 vehicles affected per crash in 2018 to 6505.8 in 2022, for a difference of -1320.7 between 2022 and 2018 and a percent difference of 16.9 percent between 2018 and 2022. While ETT and EUC both had standard deviations larger than the means due to the wide range of values included for both parameters, ETT decreased from 845.3 hours of delay per crash in 2018 to 476.5 in 2022; this is a difference of -368.8 between 2022 and 2018 and a percent difference of 43.6 between 2018 and 2022. EUC decreased from 21,725.50 dollars per crash in 2018 to 12,537.40 in 2022; this is a difference of -9,188.20 between 2022 and 2018 and a percent difference of 42.3 between 2018 and 2022. The T~7~-T~0~ parameter, representing the total time for which the speed of traffic is significantly reduced, decreased by about 4.5 minutes between 2018 and 2022.
 
-```{r fig-RCT2018}
-
-#| label: fig-RCT2018
-#| fig-cap: Distribution of 2018 IMT RCT
-
-PMHistogramData %>% 
-  filter(Year == 2018) %>% 
-  filter(PM == "RCT") %>% 
-  ggplot(aes(x = Min,y = Frequency, fill = Crash.Type)) + 
-  geom_bar(stat = "identity",position = "stack") + 
-  labs(x = "Minutes of IMT RCT") +
-  scale_fill_discrete(name = "Crash Type")
-
-```
-
-```{r fig-RCT2022}
-
-#| label: fig-RCT2022
-#| fig-cap: Distribution of 2022 IMT RCT
-
-PMHistogramData %>% 
-  filter(Year == 2022) %>% 
-  filter(PM == "RCT") %>% 
-  ggplot(aes(x = Min,y = Frequency, fill = Crash.Type)) + 
-  geom_bar(stat = "identity",position = "stack") + 
-  labs(x = "Minutes of IMT RCT") +
-  scale_fill_discrete(name = "Crash Type")
- 
-```
-
-It was found that some RCT values were greater than their respective ICT values, which conceptually is invalid because IMTs should not have left the crash site before the roadway was cleared. It was assumed that because CAD timestamps are reported by UHP teams that are on site during an incident and the other data points come from the CAD dataset, the CAD data would be more reliable in this case than TransSuite data. In these cases, the ICT value of the incident was substituted for the RCT value. The RCT values that were greater than their respective ICT values were usually within 10 minutes or less of the ICT value, so the potential error could have also been due to TOC operators having multiple incidents to watch and other urgent tasks that could have kept them busy until they detected that the incident had been cleared from CCTV footage. It is also possible that IMTs and UHP officers reported leaving the site sooner than they actually did. This effect of replacing RCTs with their respective ICT in cases where RCT was greater than ICT only shifted the distribution of RCT from the unmodified data values by about 1 percent, so the effects of crashes with this discrepancy were considered to be insignificant.
-
-The distribution of IMT ICT for years 2018 and 2022 is shown in @fig-ICT2018 and @fig-ICT2022, respectively. The distribution of IMT ICT shifted from IMTs clearing a given crash and leaving the site within the first 45 minutes of a given incident for 61 percent of incidents in 2018 to 67 percent of incidents in 2022. This reflects a percent difference of 10 percent and shows that in spite of IMTs not necessarily clearing the lanes of the roadway more quickly in 2022 than in 2018 that they still concluded their work at an incident overall more quickly in 2022 than in 2018, which is likely due to the increase in IMTs able to aid in crash response.
-
-```{r fig-ICT2018}
-
-#| label: fig-ICT2018
-#| fig-cap: Distribution of 2018 IMT ICT
-
-PMHistogramData %>% 
-  filter(Year == 2018) %>% 
-  filter(PM == "ICT") %>% 
-  ggplot(aes(x = Min,y = Frequency, fill = Crash.Type)) + 
-  geom_bar(stat = "identity",position = "stack") + 
-  labs(x = "Minutes of IMT ICT") +
-  scale_fill_discrete(name = "Crash Type")
-```
-
-```{r fig-ICT2022}
-
-#| label: fig-ICT2022
-#| fig-cap: Distribution of 2022 IMT ICT
-
-PMHistogramData %>% 
-  filter(Year == 2022) %>% 
-  filter(PM == "ICT") %>% 
-  ggplot(aes(x = Min,y = Frequency, fill = Crash.Type)) + 
-  geom_bar(stat = "identity",position = "stack") + 
-  labs(x = "Minutes of IMT ICT") +
-  scale_fill_discrete(name = "Crash Type")
-```
+These initial results for the expansion of the IMT program show that while IMT RCT and ICT showed no overall improvements that IMT RT decreased minorly and user impacts decreased significantly. AV decreased by 16.9 percent, and ETT and EUC both decreased by approximately 43 percent between 2018 and 2022. A brief description of how user impacts were obtained is presented hereafter.
 
 ## User Impacts
 
-As mentioned previously, the user impacts quantified in this study are AV, ETT, and EUC, and the number of incidents for which user impacts could be evaluated was 172 and 236 for years 2018 and 2022, respectively. The criteria that incidents were required to meet in order to be evaluated for user impacts were as follows:
+User impacts were quantified for all incidents that had a decipherable queue and no secondary incidents whose queue affected that of the primary incident. Incidents were evaluated for user impacts by obtaining UDOT traffic data for roadway at the time and location of the incident as well as for the same location but on normal days when an incident did not occur to establish baseline conditions. The stretch of the roadway where traffic was affected by a crash was then segmented into subroutes between ramps to evaluate the time when the average speed of traffic first decreased significantly below normal (T~0~) and when it returned to within normal (T~7~) to a granularity of 5 minutes. The AV of each subroute was taken as the sum of the volume of vehicles between T~0~ and T~7~ for the incident day, and the AV of the incident was taken to be the maximum AV of all subroutes affected by the crash. The effects of diversion were not included in this analysis.
 
-1.  There was a decipherable queue
+The ETT of an incident was found by calculating the ETT for each 5-minute increment between T~0~ and T~7~ for the incident and average of normal days. The hours of ETT for each 5-minute increment were found by multiplying the average travel time of the subroute by the volume of vehicles at that loop detector. The ETT of an incident was then calculated by taking the difference between the sum of the ETT for each 5-minute increment between T~0~ and T~7~ for the incident and average of normal days.
 
-2.  There were no secondary incidents whose queue affected that of the incident being evaluated
+EUC is the sum of the cost of ETT for passenger vehicles and trucks. Costs due to the ETT of passengers and trucks are the only factors considered in this analysis. The formula used for EUC is shown below where the percent trucks (T) was the portion of vehicles over 30 ft in length obtained from UDOT Traffic Data; the average vehicle occupancy (AVO) was taken as 1.14 for the I-15 based on @schultz_ut1503_2015; the individual hourly cost (IHC) and truck hourly cost (THC) were taken as \$17.81 and \$53.69 based on @ellis_value_2017. While the IHC and THC are somewhat outdated for the 2022 data, these values were still used to be consistent with 2018 EUC values to make a valid comparison free of the effects of inflation.
 
-3.  There were sufficient traffic data to perform the analysis.
-
-The traffic data included as part of the analysis were speed and volumes taken from the PeMS database and speed and average travel time for individual routes taken from the Clear Guide (previously iPeMS) database. The PeMS data are collected through loop detectors and the Clear Guide data are collected through probe data taken from cell phone applications and in-vehicle GPS units.
-
-The general process for calculating user impacts of incidents where IMTs are present requires establishing a baseline of normal traffic conditions to compare with incident traffic conditions. Therefore, three days with normal traffic conditions for the same time period and location as the incident are chosen to compare with incident traffic conditions. As shown previously in @fig-TIM_Timeline , T~0~ is the time at which an incident occurs and T~7~ is the time at which traffic conditions return to normal. The difference between T~7~ and T~0~ (T~7~-T~0~) represents the amount of time which the average speed of traffic was significantly below normal and roadway users experienced significant delays.
-
-The exact time at which an incident occurred was not contained in the crash data, and the PeMS speed and volume data have a limited granularity of 5 minutes. Therefore, T~0~ was determined to be the first 5-minute increment for which the average speed of traffic was reduced significantly below normal, and T~7~ was determined to be the first 5-minute increment for which the average speed of traffic returned to within the same threshold of normal traffic. For the purposes of this study, the threshold of normal traffic conditions was within 20 mph of the average speed of the average of normal days. In cases where incidents did not have a reduction in speed of 20 mph or more, a lower difference in the average speed of traffic was determined by the research team. While this process introduces subjectivity to the analysis process, the threshold of within 20 mph of traffic was meant to be a conservative estimate.
-
-The volume of vehicles that diverted to other routes due to congestion caused by an incident was not quantified as part of the AV of an incident. To accurately quantify AV with some vehicles diverting and exiting the roadway during the incident, the section of the roadway that was affected by the crash was segmented into links (called subroutes) between ramps. The AV of each subroute was measured as the sum of the volume of vehicles between T~0~ and T~7~ for the incident day, and the AV of the incident was taken to be the maximum AV of all subroutes affected by the crash. For cases when severe crashes occurred and traffic was diverted to other routes, the incident was not quantified. The ETT of an incident was found by calculating the ETT for each 5-minute increment between T~0~ and T~7~ for the incident and average of normal days. The hours of ETT for each 5-minute increment were found by multiplying the average travel time of the subroute by the volume of vehicles at that loop detector. The ETT of an incident was then calculated by taking the difference between the sum of the ETT for each 5-minute increment between T~0~ and T~7~ for the incident and average of normal days.
-
-The EUC is the sum of the cost of travel time for passenger vehicles and trucks. Costs due to the ETT of passengers and trucks are the only factors considered in this analysis, and the costs of excess fuel burned, property damage of a crash, injuries if sustained during the crash, and the impacts of motor vehicle emissions on public health are not included in this study, making EUC values for this study a conservative estimate. To account for the difference in cost of travel time for trucks from that of passenger vehicles, the percentage of trucks in traffic was obtained from PeMS and separate hourly costs were used for passenger vehicles and trucks. The percentage of trucks in traffic (Truck%) for this study was based on the percentage of vehicles that were 30 ft or longer while those that were less than 30 ft were passenger vehicles. The percentage of trucks was taken from the same loop detector as that of the AV of the incident.
-
-<<<<<<< HEAD
-The individual hourly cost (IHC) was estimated to be \$17.81 and the truck hourly cost (THC) was estimated to be \$53.69 based on a study by the Texas A&M Transportation Institute [@ellis_value_2017] . While these values are outdated for 2022 user impacts data, the same values were used as those for 2018 data during Phase I and Phase II to make a valid comparison without the effects of inflation as a confounding factor. The EUC formula also includes an average vehicle occupancy (AVO) factor to account for the time of multiple passengers per vehicle. THC has an incorporated AVO of 1.14, thus it does not require an external AVO factor in the EUC formula. IHC is multiplied by an AVO factor calibrated to the given interstate, direction of travel, and time of day for which the incident occurred. These AVO values were obtained from @schultz_ut1503_2015 and, while the values are somewhat outdated for 2022 data, were used to be consistent with 2018 data values. The formula for EUC is shown below: $$
- 
-EUC = ETT \times ((1- \% Trucks) \times AVO \times IHC + \%Trucks \times THC) $$
-=======
-The individual hourly cost (IHC) was estimated to be \$17.81 and the truck hourly cost (THC) was estimated to be \$53.69 based on a study by the Texas A&M Transportation Institute [@ellis_value_2017] . While these values are outdated for 2022 user impacts data, the same values were used as those for 2018 data during Phase I and Phase II to make a valid comparison without the effects of inflation as a confounding factor. The EUC formula also includes an average vehicle occupancy (AVO) factor to account for the time of multiple passengers per vehicle. THC has an incorporated AVO of 1.14, thus it does not require an external AVO factor in the EUC formula. IHC is multiplied by an AVO factor calibrated to the given interstate, direction of travel, and time of day for which the incident occurred. These AVO values were obtained from @schultz_ut1503_2015 and, while the values are somewhat outdated for 2022 data, were used to be consistent with 2018 data values. The formula for EUC is shown below: \$\$
-
-EUC = ETT \times ((1- % Trucks) \times AVO \times IHC + % Trucks \times THC) \$\$
->>>>>>> c5e60559896b57dce2700b758d5bf7df8a79e5ff
-
-See @schultz_analysis_2023 for a condensed summary of how user impacts are quantified and evaluated. The median values of each user impact are shown below. Because the data is heavily right-skewed due to some outlier incidents with very large user impact values relative to most that would skew an average, the median is used as the metric for comparison. The median user impacts are compared between 2018 and 2022 by crash type in @tbl-PDOUserImpacts, @tbl-PIUserImpacts, and @tbl-FIIUserImpacts.
-
-There is a significant percent difference between user impacts in 2018 and 2022. The percent difference the medians of 2018 and 2022 AV values is approximately 22 percent, and the percent difference for ETT and EUC is approximately 44 and 41 percent, respectively. Because EUC is primarily a function of ETT, it is proportional to and highly correlated with ETT. The percent difference between 2018 and 2022 AV values for PI crashes was slightly lower than PDO crashes at 20 percent, but the percent difference between ETT and EUC values was greater than PDO crashes with values of approximately 51 percent.
-
-```{r}
-UserImpacts <- read.csv("data/TIM Phase III Data for ETT analysis_T7T5.csv") %>% 
-  select(Affected.Volume,Total.Excess.Travel.Time,Cost....,Crash.Type,Year) %>% 
-  transmute(AV = Affected.Volume,
-            ETT = Total.Excess.Travel.Time,
-            EUC = Cost....,
-            CrashType = Crash.Type,
-            Year = Year)
-
-#| label: tbl-PDOUserImpacts
-#| tbl-cap: Median User Impacts of PDO Crashes 
-
-PDOUserImpacts <- UserImpacts %>% 
-  filter(CrashType == "PD Crash") %>% 
-  group_by(Year) %>% 
-  summarise('AV' = median(AV),
-            'ETT' = median(ETT),
-            'EUC'= median(EUC))
-PDOUserImpacts %>% 
-  kbl(align = "c") %>% 
-  kable_classic(html_font = "Cambria")
-```
-
-```{r}
-#| label: tbl-PIUserImpacts
-#| tbl-cap: Median User Impacts of PI Crashes 
-
-PIUserImpacts <- UserImpacts %>% 
-  filter(CrashType == "PI Crash") %>% 
-  group_by(Year) %>% 
-  summarise('AV' = median(AV),
-            'ETT' = median(ETT),
-            'EUC'= median(EUC))
-PIUserImpacts %>% 
-  kbl(align = "c") %>% 
-  kable_classic(html_font = "Cambria")
-```
-
-Because of the very small sample size of FII crashes for both years, it should be noted that the median user impact values for this crash type are highly skewed. The percent difference in AV values for 2018 and 2022 crashes was -22 percent, this being the only user impact to experience an increase in user impacts between 2018 and 2022. However, the percent difference in ETT and EUC between 2018 and 2022 FII crashes were both approximately 93 percent. This indicates that while more vehicles were affected in 2022 during FII crashes that the actual delay experienced by each vehicle affected was minor.
-
-```{r}
-#| label: tbl-FIIUserImpacts
-#| tbl-cap: Median User Impacts of FII Crashes 
-
-FIIUserImpacts <- UserImpacts %>% 
-  filter(CrashType == "Fatal") %>% 
-  group_by(Year) %>% 
-  summarise('AV' = median(AV),
-            'ETT' = median(ETT),
-            'EUC'= median(EUC))
-FIIUserImpacts %>% 
-  kbl(align = "c") %>% 
-  kable_classic(html_font = "Cambria")
-```
+$$EUC = ETT \times ((1-T) \times AVO \times IHC + T \times THC) $$
 
 ## Models
 
-This study hypothesizes that the expanded IMT program decreased user impacts as well as IMT RT. The dependent variables considered in this analysis include all user impacts (Ln AV, Ln ETT, and Ln EUC), IMT performance measures (IMT RT, Ln RCT, Ln IMT ICT), and Ln UHP ICT. Due to the data distribution for all user impacts and most performance measures being right-skewed, or skwewed towards large outliers, it was determined that a natural log (Ln) transformation would be taken to better fit the data with the exception of IMT RT, for which an Ln transformation did not help better describe the data for this variable. Performance measures were also used as independent variables when user impacts were analyzed as dependent variables in addition to incident characteristics. The following incident characteristics were considered in the models for this analysis:
+This study hypothesizes that the expanded IMT program was the primary cause for the reduction in user impacts as well as IMT RT. The dependent variables considered in this analysis were the natural log of all user impacts (*Ln AV*, *Ln ETT*, and *Ln EUC*), the natural log of RCT (*Ln RCT*) and IMT ICT (*Ln ICT*), and IMT *RT*. Due to the data distribution for all user impacts and most performance measures being right-skewed, or skewed towards large outliers, it was determined that a natural log (Ln) transformation would be taken to better fit the user impacts and performance measures data with the exception of *RT*, for which a natural log transformation did not help better describe the data for this variable. The independent variables considered for performance measures were incident characteristics described below. The independent variables considered for user impacts were *Ln T~7~-T~0~*, performance measures, and incident characteristics.
 
--   Year: The years for which crash data were analyzed were 2018 (reference case) and 2022, explaining the difference in user impacts and IMT performance based on IMT program size before and after the expansion. This was treated as a categorical variable.
+The first incident characteristics considered in the models for this analysis was the *Year*. The years for which crash data were analyzed were 2018 (reference case) and 2022, explaining the difference in user impacts and IMT performance based on IMT program size before and after the expansion. This was treated as a categorical variable. The *Crash Type* variable was included due to it accounting for some significant differences in crash data; the crash types included as mentioned previously are PDO, PI (reference), and FII. It should be noted that FII crashes had a very small sample size, thus skewing many of the results due to the irregular nature of these crashes and the complications introduced by them to incident response protocol.
 
--   Crash Type: This includes PDO, PI, and FII crashes where PI was used as the reference case.
+The *Time Range* variable was included; crashes analyzed for user impacts were divided into the following time ranges:
 
--   Time Range: The 5 time ranges for which crashes were divided into that were as follows:
+-   Morning Off Peak (Morning): 11:45 PM to 5:30 AM
 
-    -   Morning Off Peak: 11:45 PM to 5:30 AM
+-   AM Peak: 5:30 AM to 9:00 AM
 
-    -   AM Peak: 5:30 AM to 9:00 AM
+-   Afternoon Off Peak (Afternoon) (Reference case): 9:00 AM to 3:45 PM
 
-    -   Afternoon Off Peak (Reference case): 9:00 AM to 3:45 PM
+-   PM Peak: 3:45 PM to 6:15 PM
 
-    -   PM Peak: 3:45 PM to 6:15 PM
+-   Night Off Peak (Night): 6:15 PM to 11:45 PM
 
-    -   Night Off Peak: 6:15 PM to 11:45 PM
+The *Number of (N.) IMTs* that responded to a crash was included. Note that this is a reactionary variable; IMT protocol was to dispatch one team for crash response for most incidents or two teams for more severe incidents. Additional teams were sent based on crash severity and IMT availability rather than an anticipated number being sent initially. A variable similar in nature to this that was also included in the analysis was the *Number of (N.) UHPs Teams* that responded to a crash. These parameters were both found to be correlated with IMT performance measures but not as well with user impacts.
 
--   Number of IMTs: The number of IMTs that responded to a crash. Note that this is a reactionary variable. IMT protocol was to dispatch one team for crash response for most incidents or two teams for more severe incidents. Additional teams were sent based on crash severity and IMT availability.
-
--   Number of UHPs: The number of UHP teams that responded to a crash.
-
--   Number of Lanes Closed: The total number of lanes closed at any point during incident response.
-
--   Time Weighted Number of Lanes Closed (TWNLC): The time weighted average of the number of lanes closed during incident response. This was calculated to more precisely determine the user impacts of a crash. This was calculated using the following formula where t_i is the number of minutes that each given lane i was closed (0 minutes for lanes that were not closed), N is the number of lanes at the bottleneck of the crash, and t^\*^ is the total time for which any lane of the roadway was closed during an incident.
+The *Number of (N.) Lanes Closed* at any point during incident response was well correlated with ETT. A similar variable that was quantified to further investigate the effect of IMTs clearing a lane at any given time was the time weighted number of lanes closed (*TWNLC*). This is the time weighted average of the number of lanes closed during incident response, which was initially hypothesized to more precisely determine the user impacts of a crash. This was calculated using the following formula where t~i~ is the number of minutes that each given lane i was closed (0 minutes for lanes that were not closed), N is the number of lanes at the bottleneck of the crash, and t^\*^ is the total time for which any lane of the roadway was closed during an incident. One limitation of this parameter is that not all incidents analyzed for user impacts had all lane closures clearly defined without errors in the data to clearly determine *TWNLC*, therefore only 379 incidents of the 401 total number of incidents analyzed for user impacts (95 percent) could be analyzed for this parameter.
 
 $$ TWNLC = \frac{\sum_{i=1}^{N}t_i}{N \times t^*}
 $$
 
--   Capacity ratio of the roadway: The ratio of the time weighted average number of lanes open (or 1 minus TWNLC) to the total number of lanes (N) at the bottleneck, as shown in the following formula.
-
-$$ Capacity = \frac{N-TWNLC}{N}
-$$
-
--   Ln T~7~-T~0~: This is the natural log of the difference between the time when the average speed of traffic during an incident returned to within 20 mph of the average speed at normal conditions (T~7~) and the time when the incident occurred (T~0~). This is effectively the incident duration for which roadway users are impacted. A logarithmic transformation was applied due to the right-skew of the data and to acheieve best fit in linear regression.
-
--   Ln T~7~-T~5~: This is the difference between the time when the average speed of traffic during an incident returned to within 20 mph of the average speed at normal conditions (T~7~) and the time when all lanes at the bottleneck of the incident were cleared (T~5~). This effectively represents the time required for traffic to return to normal after all lanes being cleared. A logarithmic transformation was also applied to this variable due to the right-skew of the data and to achieve best fit in linear regression.
-
-One limitation to using the natural log transformation for the Ln T~7~-T~5~ parameter is that for incidents which had a negative T~7~-T~5~ value, this yielded an undefined value. Approximately 18 percent of incidents analyzed for used impacts had a negative T~7~-T~5~ value, indicating that the speed of traffic returned to normal before IMTs finished clearing all lanes of traffic for approximately 18 percent of incidents. Removing the natural log transformation for this parameter resulted in a poor fit of the model with user impacts, so the natural log transformation was used despite its limitation. An inverse Ln T~5~-T~7~ value to the Ln T~7~-T~5~ value was calculated and analyzed for the 18 percent of incidents for which T~7~-T~5~ was negative. However, this parameter was not statistically significant when analyzed as an independent variable with user impacts as dependent variables.
-
-Therefore, models including the Ln T~7~-T~5~ parameter had to be limited to include only the crashes for which T~7~-T~5~ was greater than zero. For this purpose, all groups of models which include the Ln T~7~-T~5~ parameter will also include models within the group that do not include Ln T~7~-T~5~ to also describe the minority of incidents for which the effects of the crash dissipated before IMTs finished clearing all lanes.
+The *Total Number of (Total) Lanes* at the bottleneck of a crash was included for user impacts analysis as it was correlated with AV. The dominant independent variable for user impacts was *Ln T~7~-T~0~*, or the natural log of the difference between the time when the average speed of traffic during an incident returned to within approximately 20 mph of the average speed at normal conditions (T~7~) and the time when the incident occurred (T~0~). This is effectively the incident duration for which roadway users are impacted. A logarithmic transformation was applied due to the right-skew of the data and to achieve best fit in linear regression.
 
 The model groups analyzed to evaluate the UDOT IMT program expansion are as follows, $$ 
-{Performance Measures}_i = {Year}_i + {Crash Type}_i + X_i\beta
+{PM}_i = {Year}_i + {TR}_i + {CT}_i + X_i\beta
 $$ and $$ 
-{User Impacts}_i = {Year}_i + {CrashType}_i + {TimeRange}_i + PerformanceMeasures + Ln T_7 -T_0 +  X_i\beta
+{UI}_i = {Year}_i + {TR}_i + {CT}_i + {Ln(T_7 -T_0)}_i\beta + {PM}_i\beta + X_i\beta
 $$
 
-where the variable index $i$ denotes being for a single incident, $X$ is a vector of the other incident characteristics variables not listed above, and $\beta$ are estimated coefficients.
+where the variable index $i$ denotes being for a single incident, PM is performance measure, TR is time range, CT is crash type, and $X$ is a vector of the other incident characteristics variables not listed above, and $\beta$ are estimated coefficients. While various models were evaluated for each performance measure and user impact, only those with most meaningful results are presented hereafter.

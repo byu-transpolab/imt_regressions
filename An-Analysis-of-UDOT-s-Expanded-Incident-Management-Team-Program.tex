@@ -149,8 +149,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={A Regression Analysis of UDOT's Expanded Incident Management Team Program},
-  pdfauthor={Joel Hyer; Grant Schultz; Gregory S. Macfarlane; Dennis Eggett},
+  pdftitle={An Analysis of UDOT's Expanded Incident Management Team Program},
+  pdfauthor={Joel Hyer; Grant Schultz; Gregory S. Macfarlane},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -162,8 +162,7 @@
 \begin{document}
 
 \begin{frontmatter}
-\title{A Regression Analysis of UDOT's Expanded Incident Management Team
-Program}
+\title{An Analysis of UDOT's Expanded Incident Management Team Program}
 \author[1]{Joel Hyer%
 %
 }
@@ -176,43 +175,36 @@ Program}
 %
 }
  \ead{gregmacfarlane@gmail.com} 
-\author[2]{Dennis Eggett%
-%
-}
-
 
 \affiliation[1]{organization={Civil and Construction Engineering
 Department, Brigham Young University},addressline={430
 EB},city={Provo},postcode={84602},postcodesep={}}
-\affiliation[2]{organization={Statistics Department, Brigham Young
-University},city={Provo},postcode={84602},postcodesep={}}
 
 \cortext[cor1]{Corresponding author}
-
 
 
 
         
 \begin{abstract}
 The Utah Department of Transportation's (UDOT's) Incident Management
-Team (IMT) program was expanded from 13 units in 2018 to 25 units in
-2020. This study conducts a regression analysis on the changes in IMT
-performance measures and the user impacts of crashes responded to by
-IMTs in the years of 2018 and 2022 to evaluate the benefits of
-additional IMTs patroling UTah roadways. Crash data were obtained from
-the Utah Highway Patrol's Computer Aided Dispatch Database and UDOT's
-TransSuite database to obtain IMT timestamps and lane closures to
-quantify the IMT performance meaures of response time (RT), roadway
-clearance time (RCT), and incident clearance time (ICT) as well as the
-user impacts of the affected volume (AV), excess travel time (ETT), and
-excess user cost (EUC) for each incident that met established criteria.
-Results indicate that the IMT program expansion resulted in a
+Team (IMT) program was expanded from 13 units in 2018 to 25 units by
+2022. This study conducts an analysis on the benefits of the program
+expansion on IMT performance measures and the user impacts of crashes
+responded to by IMTs in the years of 2018 and 2022 to evaluate the
+benefits of additional IMTs patroling UTah roadways. Crash data were
+obtained from the Utah Highway Patrol's Computer Aided Dispatch Database
+and UDOT's TransSuite database to obtain IMT timestamps and lane
+closures to quantify the IMT performance meaures of response time (RT),
+roadway clearance time (RCT), and incident clearance time (ICT) as well
+as the user impacts of the affected volume (AV), excess travel time
+(ETT), and excess user cost (EUC) for each incident that met established
+criteria. Results indicate that the IMT program expansion resulted in a
 statistically significant decrease in IMT RT by appproximately 2.7
 mintues between 2018 and 2022 as well as a 10 percent decrease in AV and
 50 percent decrease in ETT and EUC due to the program expansion while
 controlling for other incident charactersitcs. The variables that best
-explain IMT performance measuers are the number of IMTs responding to a
-crash, and the time weighted number of lanes closed duirng the crash.
+explain IMT performance measures are the number of IMTs responding to a
+crash, and the time weighted number of lanes closed during the crash.
 User impacts are best explained by the total time for which the average
 speed of traffic is reduced significantly below normal (T7-T0) as well
 as the number of lanes closed during the incident.
@@ -270,36 +262,25 @@ Journal Templates GitHub} repository.
 
 \section{Introduction}\label{introduction}
 
-The purpose of this report is to present the findings of the regression
-analysis for the expansion of the Utah Department of Transportation
-(UDOT) Incident Management Team (IMT) program and to determine the
-effect of pertinent variables of crash data on IMT performance and user
-impacts. In 2019, the Utah Department of Transportation (UDOT) funded a
-research study to evaluate the effectiveness of an expanded Incident
-Management Team (IMT) program. The number of IMTs patrolling Utah
-roadways increased from 13 to 25 between 2018 and 2020. Crash data were
-collected from the Utah Highway Patrol's (UHP) Computer-Aided Dispatch
-(CAD) database and from the UDOT TransSuite database for 2018 and 2020.
-Data were collected to compare IMT performance measures and the user
-impacts of crashes responded to by IMTs for both years to evaluate the
-benefits of the expanded IMT program. However, these data were
-compromised due to the effects of the COVID-19 pandemic.
+The purpose of this report is to present the findings of a research
+study conducted to quantify the expansion of the Utah Department of
+Transportation (UDOT) Incident Management Team (IMT) program. This was
+accomplished by determine the effect of pertinent crash data variables
+on IMT performance measures and the user impacts of crashes responded to
+by IMTs. The number of IMTs patrolling Utah roadways increased from 13
+to 25 between 2018 and 2020. Crash data were collected from the Utah
+Highway Patrol's (UHP) Computer-Aided Dispatch (CAD) database and from
+the UDOT TransSuite database for 2018 and 2020. Data were collected to
+compare IMT performance measures and the user impacts of crashes
+responded to by IMTs for both years to evaluate the benefits of the
+expanded IMT program.
 
-Because of the unusually low traffic volumes experienced during the
-COVID-19 pandemic, one of the recommendations from the research was to
-collect data in a future year without the impacts of COVID-19. The
-research presented in this report collected data for 2022 using the same
-methodology as the previous research to compare IMT performance measures
-and user impacts of crashes in 2022 with those of 2018 after traffic
-volumes had returned to a similar level as those of pre-pandemic levels.
 The performance measures collected include IMT Response Time (RT),
 Roadway Clearance Time (RCT), and IMT Incident Clearance Time (ICT). The
-study also included the performance measures of UHP RT and UHP ICT but
-focused primarily on IMT performance measures rather than those of UHP
-units. The user impacts quantified include the affected volume (AV) of
-vehicles, excess travel time (ETT) -- or the total delay experienced by
-all roadway users in a crash, and excess user cost (EUC) -- or the time
-cost of the delay experienced by all roadway users.
+user impacts quantified include the affected volume (AV) of vehicles,
+excess travel time (ETT) -- or the total delay experienced by all
+roadway users in a crash, and excess user cost (EUC) -- or the time cost
+of the delay experienced by all roadway users.
 
 There have been many studies conducted on the benefits of incident
 management, the potential of large crash data sets to improve ITS
@@ -320,14 +301,14 @@ This manuscript presents a comparison of IMT performance measures and
 the user impacts of crashes responded to by IMTs for before the program
 expansion (2018) and after the program expansion (2022). The sections
 included are a literature review of previous studies, the methods used
-to obtain and clean crash data for regression analysis, the results of
-the regression analysis, and the conclusions of the results.
+to obtain and clean crash data for analysis, the results of the
+analysis, and the conclusions of the results.
 
 \bookmarksetup{startatroot}
 
 \section{Literature Review}\label{literature-review}
 
-Previous studies on traffic incident management have explored the
+Previous studies on Traffic Incident Management (TIM) have explored the
 effectiveness of the positive effect of IMT program policies on traffic
 operations and user safety, identifying available data sources used to
 obtain and quantify IMT performance measures, compiling large data sets
@@ -341,21 +322,23 @@ One study created an open-source platform called DataFITS to collect and
 fuse traffic-related data (such as volumes, speeds, weather, etc.) from
 different sources to enhance the coverage and quality of data available
 to agencies in order to increase the quantity, reliability, and possible
-applications of ITS \citep{zisner_datafits_2023}. One application for
-which the heterogeneous data fusion was used for was predicting the
-speed and volume of traffic in two cities in Germany based on historical
-data for multiple types of roadways and under different conditions using
-a polynomial regression model, which yielded models with R-squared
-values of up to 0.91 for predicting traffic speed and 0.81 for traffic
-volume. The other application was an incident classification model that
-would first evaluate traffic data using an algorithm to classify the
-binary condition of incident or non-incident based on historical data,
-which had an accuracy of approximately 90 percent, and then to classify
-the traffic condition as being an incident, congestion, or non-incident,
-which had an accuracy of approximately 80 percent. This application is
-an example of the power of having large data sets available to agencies
-to improve incident response and expand the possibilities of ITS
-applications.
+applications of Intelligent Transportation Systems (ITS)
+\citep{zisner_datafits_2023}. One application for which the
+heterogeneous data fusion was used for was predicting the speed and
+volume of traffic in two cities in Germany based on historical data for
+multiple types of roadways and under different conditions using a
+polynomial regression model. This yielded models with
+R\textsuperscript{2} values of up to 0.91 for predicting traffic speed
+and 0.81 for traffic volume. The other application was an incident
+classification model that would first evaluate traffic data using an
+algorithm to classify the binary condition of incident or non-incident
+based on historical data, which had an accuracy of approximately 90
+percent. The platform would then classify the traffic condition as being
+an incident, congestion, or non-incident, which had an accuracy of
+approximately 80 percent. This application is an example of the power of
+having large data sets available to agencies to improve incident
+response and expand the possibilities of ITS applications such as
+integrating GIS and traffic data.
 
 A study conducted by researchers at Iowa State University ranked
 agencies within the state of Iowa based on the effectiveness of its
@@ -371,42 +354,43 @@ were cleared 7.4 minutes faster than those in rural areas. Most adverse
 weather conditions such as rain, sleet, hail, ice, and light snow had no
 statistically significant relationship with RCT except for blowing snow
 and fog/smoke, which increased RCT by 3.3 and 5.2 minutes, respectively.
-Minor PI crashes, major PI crashes, and FII crashes were shown to have a
-greater RCT than PDO crashes by 8.7, 28.5, and 108.8 minutes,
-respectively.
+Minor Personal Injury (PI) crashes, major PI crashes, and Fatal and
+Incapacitating Injury (FII) crashes were shown to have a greater RCT
+than PDO crashes by 8.7, 28.5, and 108.8 minutes, respectively.
 
-One study analyzed incident duration through three statistical methods
-including fixed-parameter ordinary least squares (OLS) regression,
-random effects OLS regression, and quantile regression
-\citep{wali_heterogeneity_2022}. The goal of using these statistical
-methods was to capture and control for the unobserved heterogeneity of
-factors that influence incident duration. This is a very logical
-approach due to the inherently random nature of crash incidents. The
-purpose of including the quantile regression method was to subset and
-analyze the data in specific ranges including the 25th, 50th, 75th, and
-95th percentiles due to the wide range of incident durations that may be
-experienced; these results also are useful for developing different
-incident response strategies for a large incident as opposed to medium
-and small incidents. Overall, the random effects OLS regression model
-was selected as the best model for predicting incident duration, which
-might be compared with the results presented in this study as RCT, with
-an R-squared value of 0.23. Note that all variables in this study were
-categorical variables.
+\citet{wali_heterogeneity_2022} analyzed incident duration through three
+statistical methods including fixed-parameter ordinary least squares
+(OLS) regression, random effects OLS regression, and quantile
+regression. The goal of using these statistical methods was to capture
+and control for the unobserved heterogeneity of factors that influence
+incident duration. This is a very logical approach due to the inherently
+random nature of crash incidents. The purpose of including the quantile
+regression method was to subset and analyze the data in specific ranges
+including the 25th, 50th, 75th, and 95th percentiles due to the wide
+range of incident durations that may be experienced; these results also
+are useful for developing different incident response strategies for a
+large incident as opposed to medium and small incidents. Overall, the
+random effects OLS regression model was selected as the best model for
+predicting incident duration, which might be compared with the results
+presented in this study as RCT, with an R-squared value of 0.23. Note
+that all variables in this study were categorical variables.
 
-While many of the studies on incident duration did not specify how it
-was determined other than through agency-provided data, some studies
-defined it as ICT while others integrated the speed of traffic into the
-platform to determine when an incident occurred. The variables of RCT,
-ICT, and T\textsubscript{7}-T\textsubscript{0} discussed and analyzed
-later in this report would be comparable to incident duration. While
-this study also seeks to model IMT performance measures, there has been
-little work done to model or predict the user impacts of crashes, which
-are largely dependent on IMT performance measures as well as other
-pertinent crash variables.
+While many of the studies on incident duration did not specify how this
+parameter was determined other than through agency-provided data, some
+studies defined incident duration as ICT while others integrated the
+speed of traffic into the platform to determine when an incident
+occurred. The variables of RCT, ICT, and the total time for which the
+average speed of traffic was significantly below normal
+(T\textsubscript{7}-T\textsubscript{0}) discussed and analyzed later in
+this report are comparable to incident duration. While this study also
+seeks to model IMT performance measures, there has been little work done
+to model or predict the user impacts of crashes, which are largely
+dependent on IMT performance measures as well as other pertinent crash
+variables.
 
-The National Cooperative Highway Research Program (NCHRP) released
-guidelines on quantifying the benefits of TIM strategies by
-\citet{shah_development_2022} which state that the reduction of delay
+The National Cooperative Highway Research Program (NCHRP) in a report
+released guidelines on quantifying the benefits of TIM strategies by
+\citet{shah_development_2022} which states that the reduction of delay
 (synonymous with ETT) of roadway users is one of the principle metrics
 used to quantify the effectiveness of an IMT program. Studies therein
 used traffic models with assumed incident duration times and IMT RT as
@@ -424,19 +408,22 @@ field conditions.
 
 Other studies previously referenced also show that IMT performance
 measures vary significantly based on field conditions, for which
-in-field data sets should be used to verify varying conditions. While
-the studies referenced in \citet{shah_development_2022} explored the
-effects of when IMTs were present as opposed to when they were not
-present, there have been few studies that have addressed the effect of
-an expanded IMT program, which findings could considerably benefit many
+in-field data sets should be used to verify conditions. While the
+studies referenced in \citet{shah_development_2022} explored the effects
+of when IMTs were present as opposed to when they were not present,
+there have been few studies that have addressed the effect of an
+expanded IMT program, which findings could considerably benefit many
 transportation agencies with an existing IMT program.
 
-This analysis is conducted using detailed, in-field incident data to
-model the user impacts of crashes responded to by IMTs in addition to
-IMT performance measures for both 2018 and 2022 to better understand how
-individual crash variables are correlated with user impacts in addition
-to performance measures as well as the effect of an expanded IMT
-program.
+This analysis is conducted using detailed, in-field incident data for
+both 2018 and 2022. Statistical models of the user impacts of crashes
+responded to by IMTs in addition to IMT performance measures provide
+better understanding of how individual crash variables are correlated
+with user impacts in addition to performance measures as well as the
+effect of an expanded IMT program. Results demonstrate that the program
+expansion accounted for the majority of the reduction of user impacts in
+2022 crashes from those of 2018 crashes over IMT performance measures
+and incident characteristics.
 
 \bookmarksetup{startatroot}
 
@@ -445,7 +432,7 @@ program.
 To estimate the impact of Utah's IMT program expansion, UHP CAD crash
 data and UDOT TransSuite lane closures data were integrated, IMT
 performance measures were calculated for each incident after obtaining
-all required time stamps, and user impacts were quantified for each
+all required timestamps, and user impacts were quantified for each
 incident with qualifying characteristics.
 
 \subsection{Crash Dataset Integration}\label{crash-dataset-integration}
@@ -455,7 +442,7 @@ database, which includes the timestamps of IMTs and UHP teams for each
 incident response. UHP provided the research team with a version of the
 data with confidential information redacted. The crash types included in
 the CAD data are PDO, PI, and FII. Figure~\ref{fig-TIM_Timeline} shows
-the timestamps required to calculate RT, RCT, and ICT. The time stamps
+the timestamps required to calculate RT, RCT, and ICT. The timestamps
 needed for calculating performance measures are T\textsubscript{1},
 T\textsubscript{4}, T\textsubscript{5}, and T\textsubscript{6}.
 T\textsubscript{1} corresponds with the time when the incident was
@@ -479,43 +466,44 @@ traffic returns approximately to normal flow conditions.
 
 }
 
-\caption{\label{fig-TIM_Timeline}TIM timeline (adapted from Conklin et
-al.~2013).}
+\caption{\label{fig-TIM_Timeline}TIM timeline (adapted from
+\citet{conkliin_data_2013}).}
 
 \end{figure}%
 
 The CAD data were adequate to determine the performance measures of RT
 and ICT for most incidents but not for RCT, which was obtained from the
-UDOT TransSuite database which included the time stamps of lane
-closures, which were used for the T\textsubscript{5} time stamp for each
-incident which TransSuite had the data available. An Excel Visual Basic
-for Applications (VBA) script was used to pair incidents from the CAD
-data set and TransSuite data set within a similar time frame as
-potential matches for the same incident, and potential matches were
-evaluated and verified by the research team based on the locations and
-details included in both databases for the given incident. The lane
-closure data for confirmed matches were then integrated into the CAD
-data through a following VBA script.
+UDOT TransSuite database. The TransSuite database includes the
+timestamps of lane closures, which were used for the T\textsubscript{5}
+timestamp for each incident which TransSuite had the data available. An
+Excel Visual Basic for Applications (VBA) script was used to pair
+incidents from the CAD dataset and TransSuite dataset within a similar
+timeframe as potential matches for the same incident, and potential
+matches were evaluated and verified by the research team based on the
+locations and details included in both databases for the given incident.
+The lane closure data for confirmed matches were then integrated into
+the CAD data using a VBA script.
 
-The total number of incidents contained in the 2018 and 2022 data sets
+The total number of incidents contained in the 2018 and 2022 datasets
 were 1,097 and 1,526, respectively, which were both taken for the months
 of March through August. Of these total incidents, the majority were PDO
 crashes. PI crashes made up a minor portion and FII crashes made up less
-than one percent for both years.Nearly all incidents had an ICT value
+than one percent for both years. Nearly all incidents had an ICT value
 and the majority had an RT value, as shown in Table~\ref{tbl-datatype}.
 However, only 28 percent of incidents in 2018 and 21 percent of
-incidents in 2022 had an available RCT value. This reduced the total
-number of incidents with all necessary time stamps and performance
-measures (RT, RCT, and ICT) to 283 and 307 incidents for 2018 and 2022,
-respectively, leaving only 26 percent and 20 percent of the original
-number of incidents, respectively.
+incidents in 2022 had an available RCT value due to TranSuite only
+overlapping with the CAD database for that portion of incidents. This
+reduced the total number of incidents with all necessary timestamps and
+performance measures (RT, RCT, and ICT) to 283 and 307 incidents for
+2018 and 2022, respectively, leaving only 26 percent and 20 percent of
+the original number of incidents, respectively.
 
 \begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3737}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1414}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1717}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1414}}
-  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1717}}@{}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
 \caption{Data Type}\label{tbl-datatype}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\centering
@@ -594,15 +582,6 @@ T7-T0 &  & 77.0 & 46.3 & 72.5 & 48.9\\
 Crash Type & Fatal & 2 & 1.2 & 4 & 1.7\\
  & PD Crash & 89 & 53.0 & 90 & 38.6\\
  & PI Crash & 77 & 45.8 & 139 & 59.7\\
-Number of IMTs & 1 & 99 & 58.9 & 139 & 59.7\\
- & 2 & 56 & 33.3 & 72 & 30.9\\
- & 3 & 10 & 6.0 & 18 & 7.7\\
- & 4 & 3 & 1.8 & 4 & 1.7\\
-Time Range & Afternoon Off Peak & 72 & 42.9 & 80 & 34.3\\
- & AM Peak & 41 & 24.4 & 46 & 19.7\\
- & Morning Off Peak & 2 & 1.2 & 2 & 0.9\\
- & Night Off Peak & 2 & 1.2 & 24 & 10.3\\
- & PM Peak & 51 & 30.4 & 81 & 34.8\\
 \bottomrule
 \end{tabular}
 
@@ -617,20 +596,20 @@ difference of 16.9 percent between 2018 and 2022. While ETT and EUC both
 had standard deviations larger than the means due to the wide range of
 values included for both parameters, ETT decreased from 845.3 hours of
 delay per crash in 2018 to 476.5 in 2022; this is a difference of -368.8
-between 2022 and 2018 and a percent difference of 43.6 percent between
-2018 and 2022. EUC decreased from 21,725.50 dollars per crash in 2018 to
+between 2022 and 2018 and a percent difference of 43.6 between 2018 and
+2022. EUC decreased from 21,725.50 dollars per crash in 2018 to
 12,537.40 in 2022; this is a difference of -9,188.20 between 2022 and
-2018 and a percent difference of 42.3 percent between 2018 and 2022. The
+2018 and a percent difference of 42.3 between 2018 and 2022. The
 T\textsubscript{7}-T\textsubscript{0} parameter, representing the total
 time for which the speed of traffic is significantly reduced, decreased
 by about 4.5 minutes between 2018 and 2022.
 
 These initial results for the expansion of the IMT program show that
-while IMT RCT and ICT showed no overall improvements, IMT RT decreased
-minorly and user impacts decreased significantly by 16.9 percent for AV
-and approximately 42 percent for ETT and EUC between 2018 and 2022. A
-brief description of how user impacts were obtained is presented
-hereafter.
+while IMT RCT and ICT showed no overall improvements that IMT RT
+decreased minorly and user impacts decreased significantly. AV decreased
+by 16.9 percent, and ETT and EUC both decreased by approximately 43
+percent between 2018 and 2022. A brief description of how user impacts
+were obtained is presented hereafter.
 
 \subsection{User Impacts}\label{user-impacts}
 
@@ -644,8 +623,8 @@ where traffic was affected by a crash was then segmented into subroutes
 between ramps to evaluate the time when the average speed of traffic
 first decreased significantly below normal (T\textsubscript{0}) and when
 it returned to within normal (T\textsubscript{7}) to a granularity of 5
-minutes. The AV of each subroute was measured as the sum of the volume
-of vehicles between T\textsubscript{0} and T\textsubscript{7} for the
+minutes. The AV of each subroute was taken as the sum of the volume of
+vehicles between T\textsubscript{0} and T\textsubscript{7} for the
 incident day, and the AV of the incident was taken to be the maximum AV
 of all subroutes affected by the crash. The effects of diversion were
 not included in this analysis.
@@ -662,7 +641,7 @@ T\textsubscript{7} for the incident and average of normal days.
 EUC is the sum of the cost of ETT for passenger vehicles and trucks.
 Costs due to the ETT of passengers and trucks are the only factors
 considered in this analysis. The formula used for EUC is shown below
-where the percent trucks was the portion of vehicles over 30 ft in
+where the percent trucks (T) was the portion of vehicles over 30 ft in
 length obtained from UDOT Traffic Data; the average vehicle occupancy
 (AVO) was taken as 1.14 for the I-15 based on
 \citet{schultz_ut1503_2015}; the individual hourly cost (IHC) and truck
@@ -672,26 +651,25 @@ for the 2022 data, these values were still used to be consistent with
 2018 EUC values to make a valid comparison free of the effects of
 inflation.
 
-\$\$
-
-EUC = ETT \times ((1- \% Trucks) \times AVO \times IHC + \%Trucks
-\times THC) \$\$
+\[EUC = ETT \times ((1-T) \times AVO \times IHC + T \times THC) \]
 
 \subsection{Models}\label{models}
 
 This study hypothesizes that the expanded IMT program was the primary
 cause for the reduction in user impacts as well as IMT RT. The dependent
 variables considered in this analysis were the natural log of all user
-impacts (Ln AV, Ln ETT, and Ln EUC), the natural log of IMT RCT and RCT,
-and IMT RT. Due to the data distribution for all user impacts and most
+impacts (\emph{Ln AV}, \emph{Ln ETT}, and \emph{Ln EUC}), the natural
+log of RCT (\emph{Ln RCT}) and IMT ICT (\emph{Ln ICT}), and IMT
+\emph{RT}. Due to the data distribution for all user impacts and most
 performance measures being right-skewed, or skewed towards large
 outliers, it was determined that a natural log (Ln) transformation would
 be taken to better fit the user impacts and performance measures data
-with the exception of IMT RT, for which a natural log transformation did
-not help better describe the data for this variable. Performance
-measures were also used as independent variables when user impacts were
-analyzed as dependent variables in addition to incident characteristics
-described as follows.
+with the exception of \emph{RT}, for which a natural log transformation
+did not help better describe the data for this variable. The independent
+variables considered for performance measures were incident
+characteristics described below. The independent variables considered
+for user impacts were \emph{Ln T\textsubscript{7}-T\textsubscript{0}},
+performance measures, and incident characteristics.
 
 The first incident characteristics considered in the models for this
 analysis was the \emph{Year}. The years for which crash data were
@@ -710,52 +688,52 @@ impacts were divided into the following time ranges:
 
 \begin{itemize}
 \item
-  Morning Off Peak: 11:45 PM to 5:30 AM
+  Morning Off Peak (Morning): 11:45 PM to 5:30 AM
 \item
   AM Peak: 5:30 AM to 9:00 AM
 \item
-  Afternoon Off Peak (Reference case): 9:00 AM to 3:45 PM
+  Afternoon Off Peak (Afternoon) (Reference case): 9:00 AM to 3:45 PM
 \item
   PM Peak: 3:45 PM to 6:15 PM
 \item
-  Night Off Peak: 6:15 PM to 11:45 PM
+  Night Off Peak (Night): 6:15 PM to 11:45 PM
 \end{itemize}
 
-The \emph{Number of IMTs} that responded to a crash was included as a .
+The \emph{Number of (N.) IMTs} that responded to a crash was included.
 Note that this is a reactionary variable; IMT protocol was to dispatch
 one team for crash response for most incidents or two teams for more
 severe incidents. Additional teams were sent based on crash severity and
 IMT availability rather than an anticipated number being sent initially.
 A variable similar in nature to this that was also included in the
-analysis was the \emph{Number of UHPs Teams} that responded to a crash.
-These parameters were both found to be correlated with IMT performance
-measures but not as well with user impacts.
+analysis was the \emph{Number of (N.) UHPs Teams} that responded to a
+crash. These parameters were both found to be correlated with IMT
+performance measures but not as well with user impacts.
 
-The \emph{Number of Lanes Closed} at any point during incident response
-was well correlated with ETT. A similar variable that was quantified to
-further investigate the effect of IMTs clearing a lane at any given time
-was the time weighted number of lanes closed (\emph{TWNLC}). This is the
-time weighted average of the number of lanes closed during incident
-response, which was initially hypothesized to more precisely determine
-the user impacts of a crash. This was calculated using the following
-formula where t\textsubscript{i} is the number of minutes that each
-given lane i was closed (0 minutes for lanes that were not closed), N is
-the number of lanes at the bottleneck of the crash, and
-t\textsuperscript{*} is the total time for which any lane of the roadway
-was closed during an incident. One limitation of this parameter is that
-not all incidents analyzed for user impacts had all lane closures
-clearly defined without errors in the data to clearly determine
-\emph{TWNLC}, therefore only 379 incidents of the 401 total number of
-incidents analyzed for user impacts (95 percent) could be analyzed for
-this parameter.
+The \emph{Number of (N.) Lanes Closed} at any point during incident
+response was well correlated with ETT. A similar variable that was
+quantified to further investigate the effect of IMTs clearing a lane at
+any given time was the time weighted number of lanes closed
+(\emph{TWNLC}). This is the time weighted average of the number of lanes
+closed during incident response, which was initially hypothesized to
+more precisely determine the user impacts of a crash. This was
+calculated using the following formula where t\textsubscript{i} is the
+number of minutes that each given lane i was closed (0 minutes for lanes
+that were not closed), N is the number of lanes at the bottleneck of the
+crash, and t\textsuperscript{*} is the total time for which any lane of
+the roadway was closed during an incident. One limitation of this
+parameter is that not all incidents analyzed for user impacts had all
+lane closures clearly defined without errors in the data to clearly
+determine \emph{TWNLC}, therefore only 379 incidents of the 401 total
+number of incidents analyzed for user impacts (95 percent) could be
+analyzed for this parameter.
 
 \[ TWNLC = \frac{\sum_{i=1}^{N}t_i}{N \times t^*}
 \]
 
-The \emph{Total Lanes} at the bottleneck of a crash was included for
-user impacts analysis as it was correlated with AV. The dominant
-independent variable for user impacts was Ln
-T\textsubscript{7}-T\textsubscript{0}, or the natural log of the
+The \emph{Total Number of (Total) Lanes} at the bottleneck of a crash
+was included for user impacts analysis as it was correlated with AV. The
+dominant independent variable for user impacts was \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}}, or the natural log of the
 difference between the time when the average speed of traffic during an
 incident returned to within approximately 20 mph of the average speed at
 normal conditions (T\textsubscript{7}) and the time when the incident
@@ -784,64 +762,65 @@ with most meaningful results are presented hereafter.
 
 The purpose of this section is to present the results of the regression
 analysis of the UDOT IMT program expansion. The IMT performance measures
-of RT, Ln RCT, and Ln ICT were analyzed with incident characteristics as
-independent variables. RT was only the performance measure shown to have
-improved due to the IMT program. The user impacts of Ln AV, Ln ETT, and
-Ln EUC were also analyzed with both performance measures and incident
-characteristics as independent variables. Overall, user impacts have
-many more variables that explain them with significantly better fit than
-do performance measures with the prime variable being Ln
-T\textsubscript{7}-T\textsubscript{0}, representing the natural log
-transformed total time which an incident significantly decreases the
-average speed of traffic.
+of RT, \emph{Ln RCT}, and \emph{Ln ICT} were analyzed with incident
+characteristics as independent variables. RT was only the performance
+measure shown to have improved due to the expansion of the IMT program.
+The user impacts of Ln AV, Ln ETT, and Ln EUC were also analyzed with
+both performance measures and incident characteristics as independent
+variables. Overall, user impacts have many more variables that explain
+them with significantly better fit than do performance measures with the
+prime variable being \emph{Ln T\textsubscript{7}-T\textsubscript{0}},
+representing the natural log transformed total time which an incident
+significantly decreases the average speed of traffic.
 
 \subsection{Performance Measures}\label{performance-measures}
 
-The IMT performance measures of RT, Ln RCT, and Ln ICT were analyzed
-against several incident characteristics. Overall, the program expansion
-results in minor improvements in RT but not for RCT and ICT. However,
-the analysis of performance measures provides models of comparable to
-fit to those of robust previous studies such as
-\citet{mumtarin_traffic_2023} using continuous variables such as the
-number of IMTs and the TWNLC, which provide a significantly better
-overall fit compared to the non-continuous variables of crash type and
-time range, as shown in the models of this subsection.
+The IMT performance measures of \emph{RT}, \emph{Ln RCT}, and \emph{Ln
+ICT} were analyzed against several incident characteristics. Overall,
+the program expansion results in minor improvements in RT but not for
+RCT and ICT. However, the analysis of performance measures provides
+models with a similar R\textsuperscript{2} value to those of robust
+previous studies such as \citet{mumtarin_traffic_2023} using continuous
+variables such as \emph{N. of IMTs} and \emph{TWNLC}, which provide a
+significantly better overall fit compared to the non-continuous
+variables of crash type and time range, as shown in the models of this
+subsection.
 
-IMT RT is primarily described by the number of IMTs responding to an
-incident and the number of lanes closed as represented by the TWNLC and
-Capacity ratio variables, which variables are included in the
-statistical models in Table~\ref{tbl-rtmodels}. The year 2018 variable
-indicates that IMTs took approximately 2.7 minutes longer to respond to
-crashes in 2018 before the expansion than in 2022 when there were more
-units. The number of IMTs variable indicates that IMT RT decreased by
+\emph{RT} is primarily described by the \emph{N. of IMTs} and
+\emph{TWNLC}, which variables are included in the statistical models in
+Table~\ref{tbl-rtmodels}. The year 2018 variable indicates that IMTs
+took approximately 2.7 minutes longer to respond to crashes in 2018
+before the expansion than in 2022 when there were more units. The
+\emph{N. of IMTs} variable indicates that \emph{RT} decreased by
 approximately 1.5 minutes for each added IMT that responded to an
 incident, showing that crashes where more IMTs were required were
 treated more urgently after detection than those where fewer IMTs
 responded.
 
-The TWNLC coefficient of 1.931 minutes indicates that IMTs took almost 2
-minutes longer to respond for each 1.0 incremental increase in the
-average number of lanes closed throughout the crash. This suggests that
-IMTs could not reach the crash site as quickly due to congestion when
-more lanes were closed. Models where Ln RCT, Ln ICT, and user impacts
-were included also showed that each of the mentioned variables had a
-positive correlation with RT, indicating that it took IMTs longer to
-respond to incidents that took longer to clear and greater user impacts.
+The \emph{TWNLC} coefficient of 1.931 minutes indicates that IMTs took
+almost 2 minutes longer to respond for each 1.0 incremental increase in
+the average number of lanes closed throughout the crash. This suggests
+that IMTs could not reach the crash site as quickly due to congestion
+when more lanes were closed. Models where \emph{Ln RCT}, \emph{Ln ICT},
+and user impacts were included also showed that each of the mentioned
+variables had a positive correlation with \emph{RT}, indicating that it
+took IMTs longer to respond to incidents that took longer to clear and
+greater user impacts.
 
 The time range variable was only statistically significant for the
 Morning Off Peak range, which time range had a least squares means
-average of between 39 and 42 minutes longer RT values than other time
-ranges; this accounts for outlier incidents where IMTs took
+average of between 39 and 42 minutes longer \emph{RT} values than other
+time ranges; this accounts for outlier incidents where IMTs took
 significantly longer to respond to crashes in the early morning than in
 the afternoon off peak and other time periods due to fewer IMTs and UHP
 teams working during this period. The lanes closed and crash type
 variables were also analyzed but did not help to improve the fit of the
-model or help further explain differing values of IMT RT. The year
-variable was interacted with the variables included in the models in
-Table~\ref{tbl-rtmodels} and other variables; however, no statistically
-significant interactions were found, showing that no other variables
-quantified in this study had a statistically significant effect on the
-difference in IMT RT due to the program expansion.
+model or help further explain differing values of \emph{RT}. The
+\emph{Year} variable was interacted with the variables included in the
+models in Table~\ref{tbl-rtmodels} and other variables; however, no
+statistically significant interactions were found, showing that no other
+variables quantified in this study had a statistically significant
+effect on the difference in \emph{RT} due to the program expansion.
 
 \begin{table}
 
@@ -852,19 +831,19 @@ difference in IMT RT due to the program expansion.
 \centering
 \begin{tabular}[t]{lcc}
 \toprule
-  & Base & w/ TWNLC\\
+  & Base & TWNLC\\
 \midrule
 (Intercept) & 15.657*** & 13.716***\\
  & (1.423) & (1.662)\\
 Year 2018 (ref. 2022) & 2.737** & 2.673*\\
  & (1.009) & (1.040)\\
-Morning Off Peak (ref. Afternoon Off Peak) & 42.974*** & 39.110***\\
+Morning (ref. Afternoon) & 42.974*** & 39.110***\\
  & (4.838) & (5.033)\\
-AM Peak (ref. Afternoon Off Peak) & -1.454 & -1.645\\
+AM Peak (ref. Afternoon) & -1.454 & -1.645\\
  & (1.299) & (1.336)\\
-PM Peak (ref. Afternoon Off Peak) & 0.643 & 0.117\\
+PM Peak (ref. Afternoon) & 0.643 & 0.117\\
  & (1.179) & (1.219)\\
-Night Off Peak (ref. Afternoon Off Peak) & 0.362 & -0.468\\
+Night (ref. Afternoon) & 0.362 & -0.468\\
  & (2.071) & (2.206)\\
 N. IMTs & -1.476* & -1.978**\\
  & (0.698) & (0.751)\\
@@ -884,55 +863,58 @@ R2 Adj. & 0.188 & 0.205\\
 
 \end{table}%
 
-Models of Ln RCT confirmed the results of the descriptive statistics in
-Table~\ref{tbl-SummaryStats} that there was a minor statistically
-significant difference between IMT RCT in 2022 and 2018 where 2022 RCT
-values were greater than in 2018. As mentioned previously, this was
-hypothesized to have been affected by the greater percentage of PI
+Models of \emph{Ln RCT} confirmed the results of the descriptive
+statistics in Table~\ref{tbl-SummaryStats} that there was a minor
+statistically significant difference between RCT in 2022 and 2018 where
+2022 RCT values were greater than in 2018. As mentioned previously, this
+was hypothesized to have been affected by the greater percentage of PI
 crashes than PDO crashes in 2022 than in 2018 and the protocol during
-the COVID-19 pandemic to emphasize safety. The Crash Type variable in Ln
-RCT models was found to be statistically significant where PDO crashes
-were found to have RCT values approximately 32 percent less than those
-of PI crashes. A Year 2018*PDO Crash interaction variable was included
-in models but not found to be statistically significant. Models of Ln
-ICT showed that there was no statistically significant difference
-between values in 2018 and 2022. These models show that the program
-expansion did not reduce IMT RCT and ICT as it did IMT RT and user
-impacts. Both Ln RCT and Ln ICT were primarily explained by the number
-of IMTs and number of UHP teams variables; RT and crash type had a minor
-impact on Ln RCT and Ln ICT values and helped to fit the model to
-approximately the same adjusted R squared value as for IMT RT. The Time
-Range variable was not statistically significant for either variable.
+the COVID-19 pandemic to emphasize safety. The \emph{Crash Type}
+variable in \emph{Ln RCT models} was found to be statistically
+significant where PDO crashes were found to have RCT values
+approximately 32 percent less than those of PI crashes. A \emph{Year
+2018*PDO Crash} interaction variable was included in one model but not
+found to be statistically significant. Models of \emph{Ln ICT} showed
+that there was no statistically significant difference between values in
+2018 and 2022. These models show that the program expansion did not
+reduce IMT RCT and ICT as it did RT and user impacts. Both \emph{Ln RCT}
+and \emph{Ln ICT} were primarily explained by the \emph{N. IMTs} and
+\emph{N. UHP Teams} variables; \emph{RT} and \emph{Crash Type} had a
+minor impact on \emph{Ln RCT} and \emph{Ln ICT} values and helped to fit
+the model to approximately the same adjusted R\textsuperscript{2} value
+as for IMT RT. The \emph{Time Range} variable was not statistically
+significant for either variable.
 
 \subsection{User Impacts}\label{user-impacts-1}
 
-The user impacts of Ln AV, Ln ETT, and Ln EUC are modeled in this
-subsection to demonstrate the impact of the UDOT IMT program expansion
-and identify the variables that best describe each user impact. The fit
-of statistical models of user impacts variables was consistently better
-than for performance measures due to user impacts having more variables
-of close fit available in the crash data set that describe phenomenons
-occurring during crashes.
+The user impact variables of \emph{Ln AV}, \emph{Ln ETT}, and \emph{Ln
+EUC} are modeled in this subsection to demonstrate the impact of the
+UDOT IMT program expansion and identify the variables that best describe
+each user impact. The fit of statistical models for user impacts
+variables was consistently better than that for performance measures due
+to user impacts having more variables of close fit available in the
+crash data set that describe phenomenons occurring during crashes.
 
-Ln AV is best described by the dominant incident characteristic of Ln
-T\textsubscript{7}-T\textsubscript{0} and the Total Number of Lanes at
-the Bottleneck. The base model of Table~\ref{tbl-avmodels}, which
-includes Ln T\textsubscript{7}-T\textsubscript{0} as the only continuous
+\emph{Ln AV} is best described by the dominant variable of \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} as well as the \emph{Total Lanes}
+variable. The base model of Table~\ref{tbl-avmodels}, which includes
+\emph{Ln T\textsubscript{7}-T\textsubscript{0}} as the only continuous
 variable along with all categorical variables, explains the majority of
 the data with an adjusted R\textsuperscript{2} value of 0.69 that
 increases moderately with the addition of other variables and
-interaction terms in other models. This indicates that the number of
+interaction terms in following models. This indicates that the number of
 vehicles affected by a crash is best explained by the time for which the
 speed of traffic is reduced significantly below normal during an
-incident. The coefficient of Ln T\textsubscript{7}-T\textsubscript{0} in
-the ``Base Ln AV'' model of 0.906 indicates that the increase in the
-number of vehicles affected by a crash without being affected by other
-variables is equal to the multiplicative increase in Ln
-T\textsubscript{7}-T\textsubscript{0} raised to the 0.906 power. For
-example, if Ln T\textsubscript{7}-T\textsubscript{0} increases by 10
+incident. The coefficient of \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} in the ``Base'' model of 0.906
+indicates that the increase in the number of vehicles affected by a
+crash without being affected by other variables is equal to the
+multiplicative increase in \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} raised to the 0.906 power. For
+example, if T\textsubscript{7}-T\textsubscript{0} increases by 10
 percent for a given incident, or a factor of 1.1, then AV will increase
 by a factor of 1.1\textsuperscript{0.906}, or approximately 1.09, or if
-Ln T\textsubscript{7}-T\textsubscript{0} increases by 50 percent for the
+T\textsubscript{7}-T\textsubscript{0} increases by 50 percent for the
 same incident, then AV will increase by a factor of
 1.5\textsuperscript{0.906}, or approximately 1.44.
 
@@ -945,31 +927,31 @@ same incident, then AV will increase by a factor of
 \centering
 \begin{tabular}[t]{lcccc}
 \toprule
-  & Base & Add Ln T7-T0*Year 2018 & Total Lanes & Base w/ Total Lanes*Year 2018\\
+  & Base & Int. 1 & T. Lanes & Int. 2\\
 \midrule
 (Intercept) & 4.813*** & 4.994*** & 3.924*** & 3.766***\\
  & (0.143) & (0.177) & (0.143) & (0.153)\\
 Year 2018 (ref. 2022) & 0.107* & -0.372 & 0.128*** & 0.553***\\
  & (0.043) & (0.280) & (0.036) & (0.161)\\
-PDO Crash (ref. PI Crash) & 0.093* & 0.090* & 0.073* & 0.075*\\
+PDO Crash (ref. PI) & 0.093* & 0.090* & 0.073* & 0.075*\\
  & (0.042) & (0.042) & (0.036) & (0.036)\\
-FII Crash (ref. PI Crash) & -0.642*** & -0.615** & -0.636*** & -0.643***\\
+FII Crash (ref. PI) & -0.642*** & -0.615** & -0.636*** & -0.643***\\
  & (0.187) & (0.187) & (0.160) & (0.158)\\
-Morning Off Peak (ref. Afternoon Off Peak) & -0.765*** & -0.811*** & -0.807*** & -0.782***\\
+Morning (ref. Afternoon) & -0.765*** & -0.811*** & -0.807*** & -0.782***\\
  & (0.225) & (0.226) & (0.192) & (0.191)\\
-AM Peak (ref. Afternoon Off Peak) & 0.006 & 0.013 & 0.040 & 0.030\\
+AM Peak (ref. Afternoon) & 0.006 & 0.013 & 0.040 & 0.030\\
  & (0.055) & (0.055) & (0.047) & (0.047)\\
-PM Peak (ref. Afternoon Off Peak) & 0.115* & 0.116* & 0.134** & 0.128**\\
+PM Peak (ref. Afternoon) & 0.115* & 0.116* & 0.134** & 0.128**\\
  & (0.049) & (0.049) & (0.042) & (0.042)\\
-Night Off Peak (ref. Afternoon Off Peak) & -0.487*** & -0.507*** & -0.491*** & -0.493***\\
+Night (ref. Afternoon) & -0.487*** & -0.507*** & -0.491*** & -0.493***\\
  & (0.089) & (0.090) & (0.076) & (0.076)\\
 Ln T7-T0 & 0.906*** & 0.862*** & 0.895*** & 0.897***\\
  & (0.033) & (0.042) & (0.028) & (0.028)\\
-Ln T7-T0*Year 2018 &  & 0.116+ &  & \\
+Ln T7-T0*2018 &  & 0.116+ &  & \\
  &  & (0.067) &  & \\
-Total N. of Lanes at Bottleneck &  &  & 0.177*** & 0.207***\\
+Total Lanes &  &  & 0.177*** & 0.207***\\
  &  &  & (0.015) & (0.018)\\
-Total Lanes*Year 2018 &  &  &  & -0.082**\\
+Total Lanes*2018 &  &  &  & -0.082**\\
  &  &  &  & (0.030)\\
 \midrule
 Num.Obs. & 400 & 400 & 400 & 400\\
@@ -985,87 +967,89 @@ R2 Adj. & 0.693 & 0.694 & 0.776 & 0.779\\
 
 \end{table}%
 
-The Year 2018 variable in the base model is moderately statistically
-significant with a coefficient of 0.107, which indicates that the number
-of vehicles affected by crashes responded to by IMTs in 2018 that is not
-accounted for by other variables is higher than that of 2022 by a factor
-of e\textsuperscript{0.107}, or 1.11. This suggests that the IMT program
-expansion with an increased number of units covering Utah roadways
-decreased the number of vehicles affected by crashes responded to by
-IMTs by approximately 11 percent. Another variable controlled for is the
-change in Ln T\textsubscript{7}-T\textsubscript{0} between 2018 and 2022
-with the addition of a Year 2018 interaction term to the Ln
-T\textsubscript{7}-T\textsubscript{0} variable added to the ``Add Ln
-T\textsubscript{7}-T\textsubscript{0}*Year 2018'' model. This variable
-being suggestively statistically significant indicates that there is
-somewhat of a difference in the log-linear slope of Ln AV vs Ln
-T\textsubscript{7}-T\textsubscript{0} for year 2018 from the reference
-case of year 2022, as shown in \textbf{?@fig-LnAVvsLnT7T0\_year}. A
-positive coefficient of 0.116 indicates that an increase in Ln
+The \emph{Year 2018} variable in the ``Base'' model is moderately
+statistically significant with a coefficient of 0.107, which indicates
+that the number of vehicles affected by crashes responded to by IMTs in
+2018 that is not accounted for by other variables is higher than that of
+2022 by a factor of e\textsuperscript{0.107}, or 1.11. This suggests
+that the IMT program expansion with an increased number of units
+covering Utah roadways decreased the number of vehicles affected by
+crashes responded to by IMTs by approximately 11 percent. Another
+variable controlled for is the change in Ln
+T\textsubscript{7}-T\textsubscript{0} between 2018 and 2022 with the
+addition of a \emph{Year 2018*Ln T\textsubscript{7}-T\textsubscript{0}}
+added to the ``Interaction 1'' model. This variable being suggestively
+statistically significant indicates that there is somewhat of a
+difference in the log-linear slope of Ln AV vs \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} in 2018 from the reference case
+of 2022, as shown in \textbf{?@fig-LnAVvsLnT7T0\_year}. A positive
+coefficient of 0.116 indicates that an increase in
 T\textsubscript{7}-T\textsubscript{0} will have a slightly greater
-effect in 2018 than in 2022, where a 10 percent increase in the Ln
+effect in 2018 than in 2022, where a 10 percent increase in the
 T\textsubscript{7}-T\textsubscript{0} would cause the AV of a 2018 crash
 to be 1.1\textsuperscript{0.116}, or 1.01, times higher than that of
-2022. Note that the Year 2018 variable for this model and all other
-models with a Year 2018 interaction term are both statistically
-non-significant and have a negative value in this model and other models
-with a Year 2018 interaction due to the log-linear slope being slightly
-greater in 2018 causing a downward shift to the Year 2018 plus intercept
-for 2018 crashes.
+2022. Note that the \emph{Year 2018} variable for this model and each
+model with a \emph{Year 2018} interaction variable are both
+statistically non-significant and have a negative value in this model
+and other models with a \emph{Year 2018} interaction due to the
+log-linear slope being slightly greater in 2018 causing a downward shift
+to the \emph{Year 2018} plus intercept for 2018 crashes.
 
 \includegraphics{04_results_files/figure-pdf/unnamed-chunk-2-1.pdf}
 
-The Total Lanes coefficient in the ``Total Lanes'' model indicates that
-each added lane at the bottleneck of a crash results in an increase in
-AV by a factor of e\textsuperscript{0.177}, or 1.19, due to roads with
-more lanes having significantly higher volumes of vehicles that may be
-impacted by a crash. The Total Lanes*Year 2018 Interaction term
-indicates a lower log-linear slope for 2018 crashes for Ln AV vs Total
-Lanes, showing that 2018 crashes were less sensitive to the number of
-lanes at the bottleneck of a crash. However, the effect is minor with
-each added lane at the bottleneck of a crash being only reducing the AV
-of 2018 crashes by a multiplicative difference of
-e\textsuperscript{-0.082}, or 0.92, from that of 2022 crashes. Each
-performance measure was not statistically significant with Ln AV when
-included in the ``Ln AV Base'' model with the Ln
-T\textsubscript{7}-T\textsubscript{0} variable due to most performance
-measures being colinear with Ln T\textsubscript{7}-T\textsubscript{0}
-but not offering any additional explanation of Ln AV in regression
-models.
+The \emph{Total Lanes} coefficient in the ``Total Lanes'' model
+indicates that each added lane at the bottleneck of a crash results in
+an increase in AV by a factor of e\textsuperscript{0.177}, or 1.19, due
+to roads with more lanes having significantly higher volumes of vehicles
+that may be impacted by a crash. The T\emph{otal Lanes*Year 2018}
+interaction variable indicates a lower log-linear slope for 2018 crashes
+for \emph{Ln AV} vs \emph{Total Lanes}, showing that 2018 crashes were
+less sensitive to the number of lanes at the bottleneck of a crash.
+However, the effect is minor with each added lane at the bottleneck of a
+crash being only reducing the AV of 2018 crashes by a multiplicative
+difference of e\textsuperscript{-0.082}, or 0.92, from that of 2022
+crashes. No performance measures were statistically significant when
+modeled with \emph{Ln AV} when the \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} variable was present due to most
+performance measures being colinear with \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} but not adding much further
+explanation to \emph{Ln AV}.
 
-Models of Ln ETT are shown in Table~\ref{tbl-ettmodels1}. Each model
-without a Year 2018 interaction variable (changing the Year 2018 value)
-has a coefficient value of between 0.4 and 0.5, indicating that crashes
-in 2018 experienced greater ETT by a factor of between
-e\textsuperscript{0.4} and e\textsuperscript{0.5}, or 1.49 and 1.65, due
-to the increased number of IMTs in the program. This shows that while
-the number of vehicles affected by a crash in 2022 is reduced minorly by
-11 percent from 2018 that the delay experienced by all users
-collectively decreases by approximately 50 percent for the reference
-case of PI crashes. The PDO crash type variable is not statistically
-significant in any Ln ETT model and has a low coefficient, indicating
-that the reduction in delay for PI crashes is also applicable for PDO
+Models of \emph{Ln ETT} are shown in Table~\ref{tbl-ettmodels1}. Each
+model without a \emph{Year 2018} interaction variable (which would
+change the difference from the intercept) has a coefficient value of
+between 0.4 and 0.5, indicating that crashes in 2018 experienced greater
+ETT by a factor of between e\textsuperscript{0.4} and
+e\textsuperscript{0.5}, or 1.49 and 1.65, due to the increased number of
+IMTs in the program. This shows that while the number of vehicles
+affected by a crash in 2022 is reduced minorly by 11 percent from 2018
+that the delay experienced by all users collectively decreases by
+approximately 50 percent for the reference case of PI crashes. The PDO
+\emph{Crash Type} variable is not statistically significant in any
+\emph{Ln ETT} model and has a low coefficient, indicating that the
+reduction in delay for PI crashes is also relatively the same for PDO
 crashes.
 
-Like Ln AV, Ln T\textsubscript{7}-T\textsubscript{0} explains the
-majority of the ETT experienced by roadway users, while other variables
-further explain variations in Ln ETT for different crash scenarios. The
-Ln T\textsubscript{7}-T\textsubscript{0} coefficient in the ``Ln ETT
-Base'' model of 1.911 indicates that a 10 percent increase in
+As for the \emph{Ln AV} models, \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} explains the majority of the ETT
+experienced by roadway users, while other variables further explain
+variations in \emph{Ln ETT} for different crash scenarios. The \emph{Ln
+T\textsubscript{7}-T\textsubscript{0}} coefficient in the ``Base'' model
+of 1.911 indicates that a 10 percent increase in
 T\textsubscript{7}-T\textsubscript{0}, or the time for which the average
 speed of traffic is reduced significantly below normal, results in an
 increase in ETT by a factor of 1.1\textsuperscript{1.911}, or 1.20,
 showing that a 10 percent increase results in a 20 percent increase in
-the delay experienced by all users. The following models with lower Ln
-T\textsubscript{7}-T\textsubscript{0} coefficients due to other
-variables helping to explain ETT indicate that for the same 10 percent
-increase in T\textsubscript{7}-T\textsubscript{0} that it would result
-in a multiplicative increase in ETT ranging from
+the delay experienced by all users. The following models with lower
+\emph{Ln T\textsubscript{7}-T\textsubscript{0}} coefficients due to
+other variables helping to explain ETT indicate that for the same 10
+percent increase in T\textsubscript{7}-T\textsubscript{0} that it would
+result in a multiplicative increase in ETT ranging from
 1.1\textsuperscript{1.21} to 1.1\textsuperscript{1.77}, or from 1.12 to
 1.18, depending on the variables including interaction terms included in
-the model. A Ln T\textsubscript{7}-T\textsubscript{0}*Year 2018
-interaction term was analyzed for but was not statistically significant,
-showing that the difference between the length of Ln
+the model. An \emph{Ln T\textsubscript{7}-T\textsubscript{0}*Year 2018}
+interaction variable was included in one model but was not statistically
+significant, showing that the difference between the length of
 T\textsubscript{7}-T\textsubscript{0} in 2018 and 2022 did not have a
 significant impact on the delay experienced by roadway users.
 
@@ -1078,23 +1062,23 @@ significant impact on the delay experienced by roadway users.
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-  & Base & Add Ln RCT & Add TWNLC & N. Lanes Closed & Add *Year 2018\\
+  & Base & RCT & TWNLC & Lanes & Int.\\
 \midrule
 (Intercept) & -2.716*** & -2.913*** & -3.101*** & -2.935*** & -3.100***\\
  & (0.388) & (0.393) & (0.393) & (0.370) & (0.381)\\
 Year 2018 (ref. 2022) & 0.454*** & 0.498*** & 0.538*** & 0.505*** & 0.842***\\
  & (0.115) & (0.116) & (0.114) & (0.109) & (0.221)\\
-PDO Crash (ref. PI Crash) & -0.067 & 0.002 & 0.004 & 0.000 & 0.002\\
+PDO Crash (ref. PI) & -0.067 & 0.002 & 0.004 & 0.000 & 0.002\\
  & (0.115) & (0.117) & (0.115) & (0.110) & (0.110)\\
-FII Crash (ref. PI Crash) & -1.398** & -1.567** & -2.285*** & -1.986*** & -1.997***\\
+FII Crash (ref. PI) & -1.398** & -1.567** & -2.285*** & -1.986*** & -1.997***\\
  & (0.506) & (0.507) & (0.498) & (0.481) & (0.479)\\
-Morning Off Peak (ref. Afternoon Off Peak) & -1.234* & -1.249* & -1.724** & -1.866** & -1.785**\\
+Morning (ref. Afternoon) & -1.234* & -1.249* & -1.724** & -1.866** & -1.785**\\
  & (0.608) & (0.604) & (0.581) & (0.575) & (0.575)\\
-AM Peak (ref. Afternoon Off Peak) & 0.095 & 0.089 & 0.101 & 0.027 & 0.037\\
+AM Peak (ref. Afternoon) & 0.095 & 0.089 & 0.101 & 0.027 & 0.037\\
  & (0.149) & (0.148) & (0.145) & (0.140) & (0.139)\\
-PM Peak (ref. Afternoon Off Peak) & 0.453*** & 0.483*** & 0.466*** & 0.459*** & 0.467***\\
+PM Peak (ref. Afternoon) & 0.453*** & 0.483*** & 0.466*** & 0.459*** & 0.467***\\
  & (0.132) & (0.132) & (0.130) & (0.124) & (0.124)\\
-Night Off Peak (ref. Afternoon Off Peak) & -1.472*** & -1.492*** & -1.789*** & -1.719*** & -1.729***\\
+Night (ref. Afternoon) & -1.472*** & -1.492*** & -1.789*** & -1.719*** & -1.729***\\
  & (0.242) & (0.240) & (0.242) & (0.228) & (0.228)\\
 Ln T7-T0 & 1.911*** & 1.773*** & 1.645*** & 1.625*** & 1.626***\\
  & (0.089) & (0.105) & (0.104) & (0.101) & (0.100)\\
@@ -1102,9 +1086,9 @@ Ln RCT &  & 0.203* & 0.192* & 0.183* & 0.185*\\
  &  & (0.082) & (0.082) & (0.077) & (0.077)\\
 TWNLC &  &  & 0.484*** &  & \\
  &  &  & (0.077) &  & \\
-N. of Lanes Closed &  &  &  & 0.371*** & 0.444***\\
+N. Lanes Closed &  &  &  & 0.371*** & 0.444***\\
  &  &  &  & (0.052) & (0.066)\\
-Lanes Closed*Year 2018 &  &  &  &  & -0.169+\\
+N. Lanes Closed*2018 &  &  &  &  & -0.169+\\
  &  &  &  &  & (0.096)\\
 \midrule
 Num.Obs. & 400 & 400 & 378 & 400 & 400\\
@@ -1120,37 +1104,44 @@ R2 Adj. & 0.608 & 0.613 & 0.643 & 0.657 & 0.659\\
 
 \end{table}%
 
-The Ln RCT variable being added to the base model does not have a large
-impact on ETT with a 10 percent increase in RCT resulting in a
-multiplicative increase in ETT of only 1.1\textsuperscript{0.203}, or
-1.02. The ``Add TWNLC'' model indicates that each added increment of 1.0
-to TWNLC causes ETT to increase by a multiplicative difference of
-e\textsuperscript{0.484}, or 1.62, showing that the impact of the total
-time for which a lane is closed has significant impacts on ETT. The ``N.
-Lanes Closed'' model represents a similar phenomenon but where the lane
-variable is the number of lanes closed at any given time during an
-incident rather than the time weighted average. The N. of Lanes Closed
+The \emph{Ln RCT} variable being added in the ``Ln RCT'' model does not
+have a large impact on ETT with a 10 percent increase in RCT resulting
+in a multiplicative increase in ETT of only 1.1\textsuperscript{0.203},
+or 1.02. \emph{RT} and \emph{Ln ICT} did not have a statistically
+signficant effect on any Ln ETT models. The ``TWNLC'' model indicates
+that each added increment of 1.0 to \emph{TWNLC} causes ETT to increase
+by a multiplicative difference of e\textsuperscript{0.484}, or 1.62,
+showing that the impact of the total time for which a lane is closed has
+significant impacts on ETT. The ``N. Lanes Closed'' model represents a
+similar phenomenon but where the lane variable is the number of lanes
+closed at any given time during an incident rather than the time
+weighted average (\emph{TWNLC}). The \emph{N. of Lanes Closed}
 coefficient of 0.376 indicates that for each lane closed at any point
-during incident response that Ln ETT increases by a factor of
+during incident response that \emph{Ln ETT} increases by a factor of
 e\textsuperscript{0.376}, or 1.46, showing that an additional lane
 closed for any amount of time during an incident results in
 significantly higher delay for roadway users, though not as much as one
 closed for the duration of the crash response versus at all.
 
-The Lanes Closed*Year 2018 interaction variable coefficient of -0.169
-indicates that the effect of an added lane in 2018 results in less added
-ETT than in 2022 by a factor of e\textsuperscript{-0.169}, or 0.84. This
-shows that the log-linear slope of Ln ETT vs N. of Lanes Closed is lower
-in 2018 and that crashes in this year were slightly less sensitive to
-the effects of an additional lane closed than 2022.
+The \emph{N. Lanes Closed*Year 2018} interaction variable coefficient of
+-0.169 indicates that the effect of an added lane in 2018 results in
+less added ETT than in 2022 by a factor of e\textsuperscript{-0.169}, or
+0.84. This shows that the log-linear slope of \emph{Ln ETT} vs \emph{N.
+of Lanes Closed} is lower in 2018 and that crashes in this year were
+slightly less sensitive to the effects of an additional lane closed than
+2022.
 
 Because EUC is defined as being a function of ETT that is adjusted only
-for AVO and the percentage of trucks on the roadway, Ln EUC and Ln ETT
-are highly correlated with and proportional to one another. Therefore,
-the coefficients in the Ln EUC models were virtually the same as those
-in Table~\ref{tbl-ettmodels1} with minor insignificant differences.
-Therefore, all trends discussed previously on Ln ETT models are
-applicable to Ln EUC models.
+for AVO and the percentage of trucks on the roadway, \emph{Ln EUC} and
+\emph{Ln ETT} are highly correlated with and proportional to one
+another. Therefore, the coefficients in the \emph{Ln EUC} models were
+virtually the same as those in Table~\ref{tbl-ettmodels1} with minor
+insignificant differences. Therefore, all trends discussed previously on
+\emph{Ln ETT} models are applicable to \emph{Ln EUC} models. The program
+expansion thus caused a decrease of 50 percent in the time cost that
+users experienced between 2018 and 2022 crashes, demonstrating the
+significant benefits that an expanded IMT program has for roadway users
+in Utah and in general.
 
 \bookmarksetup{startatroot}
 
@@ -1165,28 +1156,30 @@ crash variables that have the greatest impact on performance measures
 and user impacts.
 
 The \emph{Year 2018} variable represents the difference in crash data of
-the IMT program between years 2018 and 2022 between which the program
-expanded from 13 units to 25 units. The results of the analysis of this
-variable show that there was a statistically significant difference
-between IMT RT in 2018 and 2022 of approximately 2.7 minutes between the
-two years. This demonstrates that the expansion allows IMTs to respond
-faster to crashes presumably due to there being more of them covering
-the study area. The variables with the greatest effect on IMT RT were
-the number of IMTs that responded to an incident and TWNLC, where each
-additional IMT that responded was correlated with approximately 2.0
-minutes less RT, and each added lane that was closed for the duration of
-the incident was correlated with an added 1.9 minutes of RT; this also
-includes the effect of the number of IMTs within the same model.
+the IMT program between years 2018 and 2022 between which time the
+program expanded from 13 units to 25 units. The results of the analysis
+of this variable show that there was a statistically significant
+difference between IMT RT in 2018 and 2022 of approximately 2.7 minutes
+between the two years. This demonstrates that the expansion allows IMTs
+to respond faster to crashes presumably due to there being more of them
+covering the study area. The variables with the greatest effect on
+\emph{RT} were the number of IMTs (\emph{N. IMTs}) that responded to an
+incident and \emph{TWNLC}, where each additional IMT that responded was
+correlated with approximately 2.0 minutes less RT, and each added lane
+that was closed for the duration of the incident was correlated with an
+added 1.9 minutes of RT; this also includes the effect of the number of
+IMTs within the same model.
 
 RCT and ICT did not have any statistically significant improvements due
 to the program expansion, likely due to the IMTs emphasizing safety as
 part of post-COVID-19 pandemic protocols and an increase in the
 proportion of PI crashes to PDO crashes in 2022. The variables that were
-shown to best explain these performance measures were the number of IMTs
-and UHP teams that responded to a an incident as well as IMT RT. While
-each of the variables mentioned previously were categorical variables,
-the \emph{Time Range} variable provided added meaning to the model by
-eliminating outliers in the morning off peak.
+shown to best explain these performance measures were the \emph{N. IMTs}
+and \emph{N. UHP Teams} that responded to a an incident as well as
+\emph{RT}. While each of the variables mentioned previously were
+continuous variables, the \emph{Time Range} variable (categorical)
+provided added meaning to the model by eliminating outliers in the
+morning off peak period.
 
 Each user impact had a statistically significant and practically
 significant \emph{Year 2018} variable coefficient that showed that AV
@@ -1198,12 +1191,13 @@ experienced delay for a given crash but made a major reduction in the
 total delay and time cost experienced per by all roadway users who
 experienced delay in a given crash.
 
-One of the limitations of the year 2018 variable is that this accounts
-for all differences between 2018 and 2022 variables not accounted for by
-other variables, and while it is assumed to primarily account for the
-difference in IMT program size and the number of units on the road, it
-may not account for the effect of post-pandemic traffic conditions even
-though traffic flow rates have largely returned to normal..
+One of the limitations of the \emph{Year 2018} variable is that this
+accounts for all differences between 2018 and 2022 variables not
+accounted for by other variables, and while it is assumed to primarily
+account for the difference in IMT program size and the number of units
+on the road, it may not account for the effect of post-pandemic traffic
+conditions even though traffic flow rates have largely returned to
+normal..
 
 The key independent variables that explain user impacts of incidents
 responded to by IMTs are shown in the table below. The impact of each
@@ -1215,20 +1209,20 @@ relatively in percent changes rather than in units of time due to their
 effect on user impacts being non-linear. For the purpose of summarizing
 the impacts of each variable, a 10 percent increase of the independent
 variable was used to make a standard comparison. See the individual
-regression model coefficients and the discussion on back-transforming
-the variables with natural log transformations applied for predicting
-incident specific effects.
+model coefficients and the discussion on back-transforming the variables
+with natural log transformations applied for predicting incident
+specific effects in Chapter 3.
 
-For the T\textsubscript{7}-T\textsubscript{0} variable, a 10 percent
-increase resulted in a 9 percent increase in AV; the \emph{Ln
+For T\textsubscript{7}-T\textsubscript{0}, a 10 percent increase
+resulted in a 9 percent increase in AV; the \emph{Ln
 T\textsubscript{7}-T\textsubscript{0}*Year 2018} variable indicated a
-dufferebce of only 1 percent the effect of
+difference of only 1 percent the effect of
 T\textsubscript{7}-T\textsubscript{0} on AV in 2018 and 2022.
 T\textsubscript{7}-T\textsubscript{0} had a greater impact on ETT and
 EUC of a 20 percent increase per 10 percent increase in
 T\textsubscript{7}-T\textsubscript{0} when analyzed individually and a
 17 percent increase when the effects of the variables \emph{Ln RCT} and
-either \emph{TWNLC} or \emph{N. of Lanes Closed} were included. This
+either \emph{TWNLC} or \emph{N. Lanes Closed} were included. This
 demonstrates that the time for which speed of traffic is reduced
 significantly below normal is the primary independent variable
 influencing delay. The \emph{Ln
@@ -1257,9 +1251,9 @@ roadway users while the total number of lanes is better correlated with
 the number of roadway users affected by a crash.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4167}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2917}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2917}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2976}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2798}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4226}}@{}}
 \caption{Impact of Independent Variables on User Impacts with the
 effects of T\textsubscript{7}-T\textsubscript{0}
 included}\tabularnewline
@@ -1309,14 +1303,16 @@ impacts associated with additional IMTs responding to more crashes
 within a given coverage area.
 
 This study also highlights the crash data variables that have the
-greatest impacts on IMT performance measures and user impacts. While
-other studies have performed detailed analysis on performance measures
-given incident characteristics, few studies have incorporated IMT RT to
-model RCT and ICT. Fewer studies have been conducted on delay and user
-impacts associated with crashes responded to by IMTs using detailed
-incident data instead of simulation models, and the findings from this
-study provide well-fitted, simplistic models reflecting the impacts of
-incident characteristics and IMT performance measures on user impacts.
+greatest impacts on IMT performance measures and user impacts to help
+provide a better understanding to the field of TIM researchers and
+professionals. While other studies have performed detailed analysis on
+performance measures given incident characteristics, few studies have
+incorporated RT to model RCT and ICT. Fewer studies have been conducted
+on delay and user impacts associated with crashes responded to by IMTs
+using detailed incident data instead of simulation models, and the
+findings from this study provide well-fitted, simplistic models
+reflecting the impacts of incident characteristics and IMT performance
+measures on user impacts.
 
 \bookmarksetup{startatroot}
 
