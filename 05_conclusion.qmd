@@ -16,7 +16,7 @@ For $T_7-T_0$, a 10 percent increase resulted in a 9 percent increase in AV; the
 
 RCT did not have a statistically significant impact on AV when analyzed in the same model as $T_7-T_0$; while it was a statistically significant variable for ETT and EUC, it only increased these by 2 percent for each 10 percent increase in RCT. The number of lanes closed and TWNLC were not found to have a statistically significant effect on AV. However, the impact of 1 additional lane closed at any point during an incident increased ETT and EUC by 45 percent, and the impact of 1 additional lane closed for the duration of an incident increased ETT and EUC by 62 percent. The variable other than $T_7-T_0$ that was found to have the greatest impact on AV was the total number of lanes at the bottleneck of a crash, which caused a 19 percent increase in AV and 21 percent increase in ETT and EUC for each added lane. This demonstrates that the number of lanes closed at any point during an incident and the time for which they are closed have a large impact on the delay experienced by roadway users while the total number of lanes is better correlated with the number of roadway users affected by a crash.
 
-```{r conclusions}
+```{r conclusions, echo=FALSE}
 #| label: tbl-conclusions
 #| tbl-cap: Impact of Independent Variables on User Impacts
 library(kableExtra)
