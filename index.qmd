@@ -1,40 +1,9 @@
 # Introduction
 
-The purpose of this report is to present the findings of a research study
-conducted to quantify the expansion of the Utah Department of Transportation
-(UDOT) Incident Management Team (IMT) program. This was accomplished by
-determine the effect of pertinent crash data variables on IMT performance
-measures and the user impacts of crashes responded to by IMTs. The number of
-IMTs patrolling Utah roadways increased from 13 to 25 between 2018 and 2020.
-Crash data were collected from the Utah Highway Patrol's (UHP) Computer-Aided
-Dispatch (CAD) database and from the UDOT TransSuite database for 2018 and 2020.
-Data were collected to compare IMT performance measures and the user impacts of
-crashes responded to by IMTs for both years to evaluate the benefits of the
-expanded IMT program.
+The purpose of this report is to present the findings of a research study conducted to quantify the expansion of the Utah Department of Transportation (UDOT) Incident Management Team (IMT) program. This was accomplished by determining the effect of pertinent crash data variables on IMT performance measures and the user impacts of crashes responded to by IMTs. The number of IMTs patrolling Utah roadways increased from 13 to 25 between 2018 and 2020. Crash data were collected from the Utah Highway Patrol's (UHP) Computer-Aided Dispatch (CAD) database and from the UDOT TransSuite database for 2018 and 2020. Data were collected to compare IMT performance measures and the user impacts of crashes responded to by IMTs for both years to evaluate the benefits of the expanded IMT program.
 
-The performance measures collected include IMT Response Time (RT), Roadway
-Clearance Time (RCT), and IMT Incident Clearance Time (ICT). The user impacts
-quantified include the affected volume (AV) of vehicles, excess travel time
-(ETT) -- or the total delay experienced by all roadway users in a crash, and
-excess user cost (EUC) -- or the time cost of the delay experienced by all
-roadway users.
+The performance measures collected include IMT Response Time (RT), Roadway Clearance Time (RCT), and IMT Incident Clearance Time (ICT). The user impacts quantified include the affected volume (AV) of vehicles, excess travel time (ETT) -- or the total delay experienced by all roadway users in a crash, and excess user cost (EUC) -- or the time cost of the delay experienced by all roadway users.
 
-There have been many studies conducted on the benefits of incident management,
-the potential of large crash data sets to improve ITS capabilities, using
-machine learning as well as advanced statistical methods to predict incident
-duration, and estimate generally the reduced delay for incidents which IMTs
-responded to. However, few studies have been conducted to quantify the user
-impacts of incidents responded to by IMTs using detailed crash and lane closure
-data to understand the correlations between specific user impacts and IMT
-performance measures as well as other crash variables. Relating these variables
-using detailed incident data allows the benefits of IMTs to be more fully
-understood as well as guide the allocation of resources to allow highway
-agencies to decrease the delay and improve the safety experienced by roadway
-users. The effect of IMT program size is also a variable which has not been
-specifically addressed.
+Several studies conducted on the benefits of incident management, the potential of large crash data sets to improve Intelligent Transportation Systems (ITS) capabilities, using machine learning as well as advanced statistical methods to predict incident duration, and ways to estimate generally the reduced delay for incidents which IMTs responded to. However, very few studies have been conducted to quantify the user impacts of incidents responded to by IMTs using detailed crash and lane closure data to understand the correlations between specific user impacts and IMT performance measures as well as to other crash variables. Relating these variables using detailed incident data allows the benefits of IMTs to be more fully understood as well as guide the allocation of resources to allow highway agencies to decrease the delay and improve the safety experienced by roadway users. The effect of IMT program size is also a variable which has not been specifically addressed.
 
-This manuscript presents a comparison of IMT performance measures and the user
-impacts of crashes responded to by IMTs for before the program expansion (2018)
-and after the program expansion (2022). The sections included are a literature
-review of previous studies, the methods used to obtain and clean crash data for
-analysis, the results of the analysis, and the conclusions of the results.
+This manuscript presents a comparison of IMT performance measures and the user impacts of crashes responded to by IMTs for before the program expansion (2018) and after the program expansion (2022). The sections included are a literature review of previous studies, the methods used to obtain and clean crash data for analysis, the results of the analysis, and the conclusions of the research.
