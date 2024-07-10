@@ -9,11 +9,11 @@ book:
       orcid: 
       email: 
       affiliations:
-        - name: Civil and Construction Engineering Department, Brigham Young University
-          address: 430 EB
-          city: Provo
+        - name: HDR, Inc.
+          address: 2825 E Cottonwood Pkwy
+          city: Cottonwood Heights
           state: UT
-          postal-code: 84602
+          postal-code: 84121
     - name: Grant Schultz
       orcid: 
       email: 
@@ -42,7 +42,7 @@ book:
     - 05_conclusion.qmd
     - references.qmd
   abstract: |
-    The Utah Department of Transportation's (UDOT's) Incident Management Team (IMT) program was expanded from 13 units in 2018 to 25 units by 2022. This study conducts an  analysis on the benefits of the program expansion on IMT performance measures and the user impacts of crashes responded to by IMTs in the years of 2018 and 2022 to evaluate the benefits of additional IMTs patroling UTah roadways. Crash data were obtained from the Utah Highway Patrol's Computer Aided Dispatch Database and UDOT's TransSuite database to obtain IMT timestamps and lane closures to quantify the IMT performance meaures of response time (RT), roadway clearance time (RCT), and incident clearance time (ICT) as well as the user impacts of the affected volume (AV), excess travel time (ETT), and excess user cost (EUC) for each incident that met established criteria. Results indicate that the IMT program expansion resulted in a statistically significant decrease in IMT RT by appproximately 2.7 mintues between 2018 and 2022 as well as a 10 percent decrease in AV and 50 percent decrease in ETT and EUC due to the program expansion while controlling for other incident charactersitcs. The variables that best explain IMT performance measures are the number of IMTs responding to a crash, and the time weighted number of lanes closed during the crash. User impacts are best explained by the total time for which the average speed of traffic is reduced significantly below normal (T7-T0) as well as the number of lanes closed during the incident. 
+    The Utah Department of Transportation's (UDOT's) Incident Management Team (IMT) program was expanded from 13 units in 2018 to 25 units by 2022. This study conducts an  analysis on the benefits of the program expansion on IMT performance measures and the user impacts of crashes responded to by IMTs in the years of 2018 and 2022 to evaluate the benefits of additional IMTs patroling UTah roadways. Crash data were obtained from the Utah Highway Patrol's Computer Aided Dispatch Database and UDOT's TransSuite database to obtain IMT timestamps and lane closures to quantify the IMT performance meaures of response time (RT), roadway clearance time (RCT), and incident clearance time (ICT) as well as the user impacts of the affected volume (AV), excess travel time (ETT), and excess user cost (EUC) for each incident that met established criteria. Results indicate that the IMT program expansion resulted in a statistically significant decrease in IMT RT by appproximately 2.7 mintues between 2018 and 2022 as well as a 10 percent decrease in AV and 50 percent decrease in ETT and EUC due to the program expansion while controlling for other incident charactersitcs. The variables that best explain IMT performance measures are the number of IMTs responding to a crash, and the time weighted number of lanes closed during the crash. User impacts are best explained by the total time for which the average speed of traffic is reduced significantly below normal (T7-T0) as well as the number of lanes closed during the incident. A 10 percent increase in T7-T0 caused AV to increase by approximately 9 percent; the same increase in T7-T0 caused a 17 to 20 percent increase in ETT and EUC. For each added lane that was  closed for any amount of time during an incident, ETT and EUC increased by approximately 45 percent, while each added lane that was closed for the whole incident increased ETT and EUC by approximately 65 percent. For each added lane at the bottleneck of the crash, AV increased by 19 percent.    
 
 keywords: [Incident Management, Traffic operations]
 
